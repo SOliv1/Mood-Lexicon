@@ -1,12 +1,12 @@
 import React from 'react';
 import './AtmospherePanel.css';
+import './Snow.css';
 import {
   atmosphere,
   type TimeMode,
   type SeasonMode,
   type WeatherMode,
 } from '../../theme/atmosphere';
-
 
 interface Props {
   timeMode: TimeMode;
@@ -21,16 +21,28 @@ export default function AtmospherePanel({ timeMode, seasonMode, weatherMode }: P
 
   const finalMode = `${timeMode} • ${seasonMode} • ${weatherMode}`;
 
+  const snowflakes = Array.from({ length: 20 }).map((_, i) => (
+    <div
+      key={i}
+      className="snowflake"
+      style={{ left: `${Math.random() * 100}%`, animationDelay: `${i * 0.2}s` }}
+    />
+  ));
+
   return (
     <div
-      className={`atmosphere-panel atmosphere-panel-${timeMode}`}
+      className="atmosphere-panel"
       style={{
         backgroundColor: background,
         borderLeft: `6px solid ${border}`,
         boxShadow: `inset 0 0 40px ${overlay}`,
+        position: "relative",
+        overflow: "hidden",
         transition: "all 0.4s ease"
       }}
     >
+      {weatherMode === "snow" && <div className="snow">{snowflakes}</div>}
+
       <div className="atmosphere-title">Atmosphere Panel</div>
 
       <div className="atmosphere-row">

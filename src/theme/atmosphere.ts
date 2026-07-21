@@ -2,22 +2,18 @@ export type TimeMode = 'day' | 'night';
 export type SeasonMode = 'summer' | 'winter';
 export type WeatherMode = 'clear' | 'rain' | 'snow';
 
-export const atmosphere: {
-  time: Record<TimeMode, string>;
-  season: Record<SeasonMode, string>;
-  weather: Record<WeatherMode, string>;
-} = {
+export const atmosphere = {
   time: {
-    day: "#fdf6e3",
-    night: "#001f3f"
+    day: "#f5f9ff",      // soft daylight
+    night: "#0b1a33"     // deep navy night
   },
   season: {
-    summer: "#ffd27f",
-    winter: "#cfe8ff"
+    summer: "#ffe7b3",   // warm golden tint
+    winter: "#dce9f9"    // cold blue tint
   },
   weather: {
-    clear: "#ffffff",
-    rain: "#b3c7e6",
-    snow: "#f2f7ff"
+    clear: "rgba(255,255,255,0.4)",  // soft glow
+    rain: "rgba(100,120,150,0.4)",   // grey-blue mist
+    snow: "rgba(255,255,255,0.7)"    // bright frost glow
   }
 };
