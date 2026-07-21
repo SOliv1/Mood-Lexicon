@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './AtmospherePanel.css';
 import './Snow.css';
 import {
@@ -12,42 +12,94 @@ interface Props {
   timeMode: TimeMode;
   seasonMode: SeasonMode;
   weatherMode: WeatherMode;
+  temperature: number | null;
+  weatherLabel: string;
+  currentTime: string;
 }
 
-export default function AtmospherePanel({ timeMode, seasonMode, weatherMode }: Props) {
-  const background = atmosphere.time[timeMode];
+export default function AtmospherePanel({
+  timeMode,
+  seasonMode,
+  weatherMode,
+  temperature,
+  weatherLabel,
+  currentTime,
+}: Props) {
   const border = atmosphere.season[seasonMode];
   const overlay = atmosphere.weather[weatherMode];
 
   const finalMode = `${timeMode} • ${seasonMode} • ${weatherMode}`;
 
-  const snowflakes = Array.from({ length: 20 }).map((_, i) => (
-    <div
-      key={i}
-      className="snowflake"
-      style={{ left: `${Math.random() * 100}%`, animationDelay: `${i * 0.2}s` }}
-    />
-  ));
+  const panelTint = {
+  day: "rgba(255,232,163,0.3)",
+  night: "rgba(44,62,80,0.4)",
+  summer: "rgba(162,217,178,0.3)",
+  winter: "rgba(167,198,216,0.3)",
+  clear: "rgba(255,217,122,0.3)",
+  rain: "rgba(111,168,220,0.3)",
+  snow: "rgba(255,255,255,0.5)"
+};
+
+  const snowflakes = useMemo(
+    () =>
+      Array.from({ length: 14 }, (_, i) => ({
+        id: i,
+        left: `${(i * 29) % 100}%`,
+        delay: `${(i % 7) * 0.28}s`,
+        duration: `${3.8 + (i % 4) * 0.45}s`,
+      })),
+    []
+  );
 
   return (
     <div
-      className={`atmosphere-panel atmosphere-panel-${timeMode}`}
+      className={`atmosphere-panel atmosphere-panel-${timeMode} atmosphere-weather-${weatherMode}`}
       style={{
-        backgroundColor: background,
         borderLeft: `6px solid ${border}`,
-        boxShadow: `inset 0 0 40px ${overlay}`,
-        position: "relative",
+        boxShadow: `0 8px 28px rgba(0, 0, 0, 0.14), inset 0 0 32px ${overlay}`,
         overflow: "hidden",
         transition: "all 0.4s ease"
       }}
     >
-      {weatherMode === "snow" && <div className="snow">{snowflakes}</div>}
+      {weatherMode === "snow" && (
+        <div className="snow atmosphere-snow" aria-hidden="true">
+          {snowflakes.map((flake) => (
+            <div
+              key={flake.id}
+              className="snowflake"
+              style={{
+                left: flake.left,
+                animationDelay: flake.delay,
+                animationDuration: flake.duration,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
-      <div className="atmosphere-title">Atmosphere Panel</div>
+      <div
+        className="atmos-panel"
+        style={{
+          background: panelTint[weatherMode],
+          transition: "background 0.4s ease",
+          padding: "1rem",
+          borderRadius: "16px",
+          backdropFilter: "blur(12px)"
+        }}
+      >
+
+      <div className="atmosphere-title">Atmosphere</div>
+
+      <div className="atmosphere-temp">
+        {temperature === null ? "--" : temperature}
+        <span>°C</span>
+      </div>
+
+      <div className="atmosphere-summary">{weatherLabel}</div>
 
       <div className="atmosphere-row">
         <span className="atmosphere-label">Time:</span>
-        <span className="atmosphere-value">{timeMode}</span>
+        <span className="atmosphere-value">{currentTime} · {timeMode}</span>
       </div>
 
       <div className="atmosphere-row">
@@ -61,6 +113,7 @@ export default function AtmospherePanel({ timeMode, seasonMode, weatherMode }: P
       </div>
 
       <div className="atmosphere-final">{finalMode}</div>
+      </div>
     </div>
   );
 }

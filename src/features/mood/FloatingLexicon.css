@@ -1,0 +1,62 @@
+.lexicon-preview-panel {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    max-width: min(320px, calc(100vw - 4rem));
+    background: rgba(255, 255, 255, 0.7);
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-size: 0.85rem;
+    backdrop-filter: blur(8px);
+    z-index: 35;
+}
+
+.floating-lexicon {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 320px;
+    max-height: 70vh;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 1rem;
+    z-index: 40;
+    transform-origin: bottom right;
+    transition: max-height 0.4s ease, padding 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
+}
+
+.floating-lexicon.open {
+    max-height: 70vh;
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+}
+
+.floating-lexicon.hidden {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    transform: translateY(20px);
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.floating-lexicon.spring {
+    border: 2px solid #FFD97A;
+}
+
+.floating-lexicon.summer {
+    border: 2px solid #A2D9B2;
+}
+
+.floating-lexicon.autumn {
+    border: 2px solid #FF6F91;
+}
+
+.floating-lexicon.winter {
+    border: 2px solid #A7C6D8;
+}

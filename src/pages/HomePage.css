@@ -1,56 +1,99 @@
-.homepage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    padding: 3rem 1rem;
-    background: #f7f7f7;
+.homepage-shell {
+    --mood-primary: #CFE8F3;
+    --mood-secondary: #DDEFF7;
+    --mood-accent: #BBD7E8;
+    --mood-strong: #A7C6D8;
+    --mood-ink: #2f3b55;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1.1fr);
+    align-items: start;
+    gap: clamp(1.25rem, 3vw, 3rem);
     min-height: 100vh;
+    padding: clamp(1rem, 3vw, 2.5rem);
+    transition: background 900ms ease, color 900ms ease;
 }
 
-/* White card */
-.tasks-card {
-    background: #ffffff;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    width: 100%;
-    max-width: 480px;
-    text-align: center;
+.homepage-hero-zone {
+    grid-column: 1 / -1;
 }
 
-/* Buttons */
-.tasks-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 1.5rem;
+.homepage-shell::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+        radial-gradient(circle at 72% 28%, color-mix(in srgb, var(--mood-accent) 28%, transparent), transparent 34%),
+        radial-gradient(circle at 28% 82%, color-mix(in srgb, var(--mood-primary) 22%, transparent), transparent 38%);
+    transition: background 1100ms ease, opacity 1100ms ease;
 }
 
-.task-btn {
-    padding: 1rem;
+.homepage-ritual-zone {
+    transition: filter 800ms ease;
+}
+
+.lexicon-toggle-button {
+    margin-top: 1rem;
+    padding: 0.7rem 1.1rem;
     border-radius: 12px;
-    border: none;
-    font-size: 1rem;
+    border: 1px solid color-mix(in srgb, var(--mood-strong) 36%, transparent);
+    background: color-mix(in srgb, var(--mood-accent) 48%, rgba(255, 255, 255, 0.42));
+    color: var(--mood-ink);
     cursor: pointer;
-    font-weight: 500;
+    font-size: 0.95rem;
+    font-weight: 700;
+    box-shadow: 0 8px 22px color-mix(in srgb, var(--mood-strong) 18%, transparent);
+    backdrop-filter: blur(10px);
+    transition: background 700ms ease, box-shadow 700ms ease, transform 0.2s ease;
 }
 
-.task-btn.water {
-    background: #cce7ff;
+.lexicon-toggle-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--mood-strong) 24%, transparent);
 }
 
-.task-btn.walk {
-    background: #ffe4cc;
+.home-lexicon-stage {
+    min-width: 0;
+    max-height: 82vh;
+    overflow-y: auto;
+    border-radius: 18px;
+    background:
+        linear-gradient(135deg,
+            color-mix(in srgb, var(--mood-primary) 24%, rgba(255, 255, 255, 0.68)),
+            color-mix(in srgb, var(--mood-secondary) 30%, rgba(255, 255, 255, 0.5)));
+    box-shadow:
+        0 24px 70px color-mix(in srgb, var(--mood-strong) 22%, transparent),
+        inset 0 0 42px color-mix(in srgb, var(--mood-accent) 20%, transparent);
+    transform-origin: top right;
+    transition:
+        background 900ms ease,
+        box-shadow 900ms ease,
+        border-color 900ms ease,
+        max-height 450ms ease,
+        opacity 350ms ease,
+        transform 450ms ease,
+        padding 450ms ease;
 }
 
-.quote-error {
-    background: #ffdddd;
-    color: #a33;
-    padding: 1rem;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 480px;
-    text-align: center;
-    font-weight: 500;
+.home-lexicon-stage.is-open {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+    pointer-events: auto;
+}
+
+.home-lexicon-stage.is-closed {
+    max-height: 0;
+    opacity: 0;
+    transform: scaleY(0.96) translateY(-0.5rem);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+@media (max-width: 900px) {
+    .homepage-shell {
+        grid-template-columns: 1fr;
+    }
 }

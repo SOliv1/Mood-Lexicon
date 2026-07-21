@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import type { MoodEntry } from "../../types/mood";
 import { moodEcho } from "../../data/moods/engine/moodEngine";
 import "./MoodDisplay.css";
+import "../../components/Ritual/Snow.css";
 import { moods } from "../../data/moods";
 import { resolveMood, microNudge } from "../../data/moods/engine/moodEngine";
 import RitualCard from "./RitualCard";
-import { type WeatherMode } from "../../theme/atmosphere";
+import { type SeasonMode, type WeatherMode } from "../../theme/atmosphere";
 
 type MoodDisplayProps = {
+  seasonMode: SeasonMode;
   weatherMode: WeatherMode;
 };
 
-export default function MoodDisplay({ weatherMode }: MoodDisplayProps) {
+export default function MoodDisplay({ seasonMode, weatherMode }: MoodDisplayProps) {
   // Feeling input + engine results
   const [feeling, setFeeling] = useState("");
   const [suggestion, setSuggestion] = useState<MoodEntry | null>(null);
@@ -23,10 +25,35 @@ export default function MoodDisplay({ weatherMode }: MoodDisplayProps) {
     rain: "Rainy weather pairs well with calm and reflective moods.",
     snow: "Snowy air supports restful and peaceful moods.",
   };
-  const seasonClass = suggestion?.season.toLowerCase() ?? "summer";
+  const seasonClass = suggestion?.season.toLowerCase() ?? seasonMode;
+  const snowflakes = useMemo(
+    () =>
+      Array.from({ length: 42 }, (_, i) => ({
+        id: i,
+        left: `${(i * 23) % 100}%`,
+        delay: `${(i % 12) * 0.24}s`,
+        duration: `${4.2 + (i % 6) * 0.5}s`,
+      })),
+    []
+  );
 
   return (
     <div className={`mood-suggestion mood-${seasonClass} mood-weather-${weatherMode}`}>
+      {weatherMode === "snow" && (
+        <div className="weather-layer snow" aria-hidden="true">
+          {snowflakes.map((flake) => (
+            <div
+              key={flake.id}
+              className="snowflake"
+              style={{
+                left: flake.left,
+                animationDelay: flake.delay,
+                animationDuration: flake.duration,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       <RitualCard
           feeling={feeling}
@@ -37,7 +64,7 @@ export default function MoodDisplay({ weatherMode }: MoodDisplayProps) {
           setNudge(moodEntry ? microNudge(moodEntry) : null);
           setEcho(moodEntry ? moodEcho(moodEntry) : null);
         }}
-        season={suggestion?.season}
+        season={suggestion?.season ?? seasonMode}
       />
 
 

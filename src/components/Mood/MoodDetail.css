@@ -1,25 +1,65 @@
 .lexicon {
+    position: relative;
+    overflow: hidden;
     max-width: 700px;
     margin: 2rem auto;
     padding: 2rem;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.6);
+    background:
+        radial-gradient(circle at 82% 12%, color-mix(in srgb, var(--mood-accent, #BBD7E8) 34%, transparent), transparent 28%),
+        linear-gradient(145deg,
+            color-mix(in srgb, var(--mood-primary, #CFE8F3) 38%, rgba(255, 255, 255, 0.68)),
+            color-mix(in srgb, var(--mood-secondary, #DDEFF7) 42%, rgba(255, 255, 255, 0.48)));
     backdrop-filter: blur(12px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.06),
+        inset 0 0 54px color-mix(in srgb, var(--mood-accent, #BBD7E8) 18%, transparent);
+    color: var(--mood-ink, #2f3b55);
+    border: 1px solid color-mix(in srgb, var(--mood-strong, #A7C6D8) 40%, transparent);
+    transition: background 900ms ease, box-shadow 900ms ease, border-color 900ms ease, color 900ms ease;
 }
 
 .lexicon-title {
     font-size: 2.2rem;
     font-weight: 500;
-    margin-bottom: 1.5rem;
+    margin: 0;
     letter-spacing: 0.5px;
     text-align: center;
+}
+
+.lexicon-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.mood-toggle {
+    flex: 0 0 auto;
+    padding: 0.65rem 0.85rem;
+    border-radius: 10px;
+    border: 1px solid rgba(47, 59, 85, 0.22);
+    background: color-mix(in srgb, var(--mood-accent, #BBD7E8) 18%, rgba(255, 255, 255, 0.62));
+    color: var(--mood-ink, #2f3b55);
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 600;
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 700ms ease, color 700ms ease;
+}
+
+.mood-toggle:hover {
+    background: rgba(255, 255, 255, 0.76);
+    box-shadow: 0 6px 16px rgba(47, 59, 85, 0.16);
+    transform: translateY(-1px);
 }
 
 .lexicon-section {
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid color-mix(in srgb, var(--mood-strong, #A7C6D8) 22%, rgba(0, 0, 0, 0.05));
+    transition: border-color 900ms ease;
 }
 
 .lexicon-section h3 {
@@ -39,7 +79,8 @@
     padding: 0.4rem 0;
     font-size: 1rem;
     line-height: 1.5;
-    color: #333;
+    color: color-mix(in srgb, var(--mood-ink, #2f3b55) 86%, #111);
+    transition: color 700ms ease, background 700ms ease, transform 0.2s ease;
 }
 
 /* Soft hover effect */
@@ -47,6 +88,35 @@
     color: #000;
     transform: translateX(4px);
     transition: 0.2s ease;
+}
+
+.lexicon-antonyms {
+    background: color-mix(in srgb, var(--mood-accent, #BBD7E8) 16%, rgba(255, 255, 255, 0.28));
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.lexicon-antonyms ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.lexicon-antonyms li {
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--mood-strong, #A7C6D8) 18%, rgba(47, 59, 85, 0.08));
+}
+
+@media (max-width: 560px) {
+    .lexicon-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .mood-toggle {
+        width: 100%;
+    }
 }
 
 /* Mood themes */

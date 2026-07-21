@@ -25,6 +25,6 @@
     }
 
     100% {
-        transform: translateY(100vh) translateX(20px);
+        transform: translateY(var(--snow-fall-distance, 100vh)) translateX(20px);
     }
 }

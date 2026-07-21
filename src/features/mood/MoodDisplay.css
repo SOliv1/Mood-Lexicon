@@ -1,4 +1,6 @@
 .mood-suggestion {
+    position: relative;
+    overflow: hidden;
     border-radius: 12px;
     padding: 1rem;
     transition:
@@ -6,6 +8,11 @@
         border-color 600ms ease,
         box-shadow 600ms ease,
         color 600ms ease;
+}
+
+.mood-suggestion > :not(.weather-layer) {
+    position: relative;
+    z-index: 1;
 }
 
 .mood-suggestion.mood-winter {
@@ -228,6 +235,10 @@ body {
 .mood-weather-rain {
     position: relative;
     overflow: hidden;
+    border-color: rgba(91, 145, 190, 0.55);
+    box-shadow:
+        0 10px 28px rgba(64, 104, 148, 0.22),
+        inset 0 0 42px rgba(111, 168, 220, 0.2);
 }
 
 .mood-weather-rain::after {
@@ -240,6 +251,13 @@ body {
             rgba(180, 208, 240, 0.18) 35%,
             transparent 70%);
     animation: rainShimmer 3.2s linear infinite;
+    z-index: 0;
+}
+
+.mood-weather-clear {
+    box-shadow:
+        0 10px 28px rgba(219, 164, 58, 0.18),
+        inset 0 0 38px rgba(255, 217, 122, 0.26);
 }
 
 @keyframes rainShimmer {
@@ -253,8 +271,26 @@ body {
 }
 
 .mood-weather-snow {
-    box-shadow: 0 0 22px rgba(220, 240, 255, 0.35);
+    border-color: rgba(167, 198, 216, 0.68);
+    box-shadow:
+        0 0 22px rgba(220, 240, 255, 0.35),
+        inset 0 0 46px rgba(246, 251, 255, 0.32);
     animation: snowGlow 3.4s ease-in-out infinite alternate;
+}
+
+.mood-suggestion .snow {
+    z-index: 0;
+    --snow-fall-distance: 32rem;
+}
+
+.mood-suggestion .snowflake {
+    width: 7px;
+    height: 7px;
+    background: rgba(246, 251, 255, 0.94);
+    opacity: 0.9;
+    box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.95),
+        0 0 14px rgba(120, 180, 230, 0.45);
 }
 
 @keyframes snowGlow {

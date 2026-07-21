@@ -26,6 +26,12 @@ const moodLexiconSlice = createSlice({
       if (mood) state.selectedMood = mood;
     },
 
+    cycleMoodTheme(state) {
+      const currentIndex = state.moods.findIndex(m => m.id === state.selectedMood.id);
+      const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % state.moods.length;
+      state.selectedMood = state.moods[nextIndex];
+    },
+
     // NEW: Sync lexicon with UI mood
     syncWithUiMood(state, action) {
       const lexiconId = moodMap[action.payload];
@@ -35,5 +41,5 @@ const moodLexiconSlice = createSlice({
   }
 });
 
-export const { selectMood, syncWithUiMood } = moodLexiconSlice.actions;
+export const { selectMood, cycleMoodTheme, syncWithUiMood } = moodLexiconSlice.actions;
 export default moodLexiconSlice.reducer;

@@ -1,12 +1,19 @@
 .atmos-buttons {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 16px;
     padding: 20px;
-    background: #f7f7f7;
+    background: rgba(247, 247, 247, 0.88);
     border-radius: 12px;
     border: 1px solid #ddd;
     max-width: 280px;
+    isolation: isolate;
+}
+
+.atmos-buttons > * {
+    position: relative;
+    z-index: 1;
 }
 
 .atmos-buttons h3 {
@@ -38,22 +45,28 @@
 .atmos-button {
     padding: 8px 14px;
     border-radius: 8px;
-    border: none;
+    border: 1px solid rgba(47, 59, 85, 0.16);
     background: #e6e6e6;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: filter 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
     font-size: 14px;
+    color: #1f2933;
 }
 
 .atmos-button:hover {
-    background: #d4d4d4;
+    filter: brightness(0.96) saturate(1.08);
+    transform: translateY(-1px);
 }
 
 .atmos-button:active {
-    background: #c8c8c8;
+    filter: brightness(0.9);
+    transform: translateY(0);
 }
 
 .atmos-button.is-active {
-    background: #2f3b55;
-    color: #f7f9ff;
+    box-shadow:
+        0 0 0 3px rgba(47, 59, 85, 0.34),
+        0 6px 16px rgba(47, 59, 85, 0.24);
+    transform: translateY(-1px);
+    font-weight: 700;
 }

@@ -1,14 +1,24 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { cycleMoodTheme } from '../../features/mood/moodLexiconSlice';
 import { RootState } from '../../store';
 
 export default function MoodDetail() {
+  const dispatch = useDispatch();
   const mood = useSelector((state: RootState) => state.moodLexicon.selectedMood);
 
   if (!mood) return null;
 
   return (
     <section className={`lexicon lexicon-${mood.id}`}>
-      <h2 className="lexicon-title">{mood.name}</h2>
+      <div className="lexicon-header">
+        <h2 className="lexicon-title">{mood.name}</h2>
+        <button
+          className="mood-toggle"
+          onClick={() => dispatch(cycleMoodTheme())}
+        >
+          Change Mood Theme
+        </button>
+      </div>
 
       <div className="lexicon-section">
         <h3>Synonyms</h3>
@@ -18,6 +28,17 @@ export default function MoodDetail() {
           ))}
         </ul>
       </div>
+
+      {mood.antonyms && mood.antonyms.length > 0 && (
+        <div className="lexicon-section lexicon-antonyms">
+          <h3>Antonyms</h3>
+          <ul>
+            {Array.from(new Set(mood.antonyms)).map((a: string) => (
+              <li key={a}>{a}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div className="lexicon-section">
         <h3>Related</h3>
