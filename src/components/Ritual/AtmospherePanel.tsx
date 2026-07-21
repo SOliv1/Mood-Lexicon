@@ -31,7 +31,7 @@ export default function AtmospherePanel({ timeMode, seasonMode, weatherMode }: P
 
   return (
     <div
-      className="atmosphere-panel"
+      className={`atmosphere-panel atmosphere-panel-${timeMode}`}
       style={{
         backgroundColor: background,
         borderLeft: `6px solid ${border}`,
