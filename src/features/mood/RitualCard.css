@@ -1,0 +1,1486 @@
+/* ---------------------------------------------------------
+   RITUAL CARD BASE
+--------------------------------------------------------- */
+
+.ritual-container {
+    background: #f3ecf7;
+    /* soft lavender linen */
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+/* ---------------------------------------------------------
+   SEASONAL TINT OVERLAY
+--------------------------------------------------------- */
+
+.ritual-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    opacity: 0.18;
+    background: var(--season-tint);
+    pointer-events: none;
+}
+
+.ritual-winter {
+    --season-tint: #e4f2ff;
+}
+
+.ritual-spring {
+    --season-tint: #f5f9f2;
+}
+
+.ritual-summer {
+    --season-tint: #fff4d9;
+}
+
+.ritual-autumn {
+    --season-tint: #ffe9e0;
+}
+
+.ritual-harvest {
+    --season-tint: #fff9f0;
+}
+
+/* ---------------------------------------------------------
+   CANDLE FLAME — FINAL PURPLE VERSION
+--------------------------------------------------------- */
+
+.ritual-flame {
+    font-size: 2.4rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+
+    /* VERY STRONG PURPLE GLOW */
+    filter:
+        drop-shadow(0 0 22px rgba(90, 0, 140, 1)) drop-shadow(0 0 12px rgba(140, 0, 200, 0.85));
+
+    animation: flameAlive 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes flameAlive {
+    from {
+        opacity: 0.9;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 18px rgba(90, 0, 140, 1)) drop-shadow(0 0 10px rgba(140, 0, 200, 0.85));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.22);
+        filter:
+            drop-shadow(0 0 28px rgba(140, 0, 200, 1)) drop-shadow(0 0 16px rgba(180, 0, 240, 1));
+    }
+}
+
+/* ---------------------------------------------------------
+   INPUT FIELD
+--------------------------------------------------------- */
+
+.ritual-input {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    background: #fff;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+/* ---------------------------------------------------------
+   BUTTON — DEEP PURPLE
+--------------------------------------------------------- */
+
+.ritual-button {
+    padding: 1rem 1.3rem;
+    border-radius: 14px;
+
+    background: #4a006e;
+    /* deep plum */
+    color: #f8eaff;
+    /* lavender text */
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ritual-button:hover {
+    background: #5d008c;
+    /* brighter plum */
+    box-shadow: 0 4px 14px rgba(90, 0, 140, 0.55);
+    transform: translateY(-2px);
+}
+
+.ritual-button:active {
+    background: #3a0054;
+    /* darker plum */
+    transform: scale(0.95);
+}
+
+/* ---------------------------------------------------------
+   HOVER — DEEP PURPLE AURA
+--------------------------------------------------------- */
+
+.ritual-container:hover {
+    transform: translateY(-8px);
+    box-shadow:
+        0 0 0 3px rgba(90, 0, 140, 0.75),
+        /* crisp plum edge */
+        0 14px 40px rgba(90, 0, 140, 0.85);
+    /* deep plum glow */
+}
+
+/* ---------------------------------------------------------
+   CLICK — PURPLE IGNITION BURST
+--------------------------------------------------------- */
+
+.ritual-container.ritual-active {
+    animation: ritualIgnitePurple 0.9s ease forwards;
+}
+
+@keyframes ritualIgnitePurple {
+    0% {
+        box-shadow:
+            0 0 0 3px rgba(90, 0, 140, 0.65),
+            0 10px 30px rgba(90, 0, 140, 0.55);
+        transform: translateY(0);
+    }
+
+    40% {
+        box-shadow:
+            0 0 0 4px rgba(120, 0, 180, 0.85),
+            /* ignition edge */
+            0 20px 50px rgba(120, 0, 180, 0.95);
+        /* ignition bloom */
+        transform: translateY(-10px);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 3px rgba(90, 0, 140, 0.75),
+            0 12px 36px rgba(90, 0, 140, 0.85);
+        transform: translateY(-5px);
+    }
+}
+
+/* ---------------------------------------------------------
+   POST-CLICK — PURPLE SHIMMER WASH
+--------------------------------------------------------- */
+
+.ritual-container.ritual-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    pointer-events: none;
+    animation: ritualShimmerPurple 1.2s ease forwards;
+}
+
+@keyframes ritualShimmerPurple {
+    0% {
+        background: rgba(120, 0, 180, 0.0);
+    }
+
+    40% {
+        background: rgba(120, 0, 180, 0.35);
+    }
+
+    100% {
+        background: rgba(120, 0, 180, 0.0);
+    }
+}
+
+/* ---------------------------------------------------------
+   NIGHT MODE — deeper purple after 21:00
+--------------------------------------------------------- */
+
+.day-night .ritual-flame {
+    filter:
+        drop-shadow(0 0 32px rgba(120, 0, 200, 1)) drop-shadow(0 0 18px rgba(180, 0, 240, 1));
+}
+
+.day-night .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(120, 0, 200, 0.85),
+        0 18px 48px rgba(120, 0, 200, 0.95);
+}
+
+.day-night .ritual-button {
+    background: #3a0054;
+}
+
+.day-night .ritual-button:hover {
+    background: #4d0072;
+}
+
+/* ---------------------------------------------------------
+   SEASONAL PURPLE VARIANTS
+--------------------------------------------------------- */
+
+/* Winter — cool lavender */
+.ritual-winter .ritual-flame {
+    filter:
+        drop-shadow(0 0 22px rgba(140, 120, 255, 1)) drop-shadow(0 0 12px rgba(180, 160, 255, 0.85));
+}
+
+/* Spring — soft violet */
+.ritual-spring .ritual-flame {
+    filter:
+        drop-shadow(0 0 22px rgba(150, 80, 200, 1)) drop-shadow(0 0 12px rgba(190, 120, 240, 0.85));
+}
+
+/* Summer — bright orchid */
+.ritual-summer .ritual-flame {
+    filter:
+        drop-shadow(0 0 22px rgba(180, 0, 220, 1)) drop-shadow(0 0 12px rgba(220, 80, 255, 0.85));
+}
+
+/* Autumn — deep plum */
+.ritual-autumn .ritual-flame {
+    filter:
+        drop-shadow(0 0 22px rgba(110, 0, 140, 1)) drop-shadow(0 0 12px rgba(150, 0, 180, 0.85));
+}
+
+/* Harvest — warm wine */
+.ritual-harvest .ritual-flame {
+    filter:
+        drop-shadow(0 0 22px rgba(140, 0, 100, 1)) drop-shadow(0 0 12px rgba(180, 0, 140, 0.85));
+}
+
+/* ---------------------------------------------------------
+   WEATHER-AWARE FLAME FLICKER
+--------------------------------------------------------- */
+
+/* Sun — brighter, sharper flicker */
+.weather-sun .ritual-flame {
+    animation: flameAliveSun 1s ease-in-out infinite alternate;
+}
+
+@keyframes flameAliveSun {
+    from {
+        transform: translateY(0) scale(1);
+        filter: drop-shadow(0 0 26px rgba(200, 0, 255, 1));
+    }
+
+    to {
+        transform: translateY(-5px) scale(1.25);
+        filter: drop-shadow(0 0 36px rgba(240, 80, 255, 1));
+    }
+}
+
+/* Cloud — softer, slower flicker */
+.weather-cloud .ritual-flame {
+    animation: flameAliveCloud 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes flameAliveCloud {
+    from {
+        opacity: 0.85;
+        transform: translateY(0) scale(1);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-3px) scale(1.15);
+    }
+}
+
+/* Rain — gentle, minimal flicker */
+.weather-rain .ritual-flame {
+    animation: flameAliveRain 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes flameAliveRain {
+    from {
+        opacity: 0.75;
+        transform: translateY(0) scale(1);
+    }
+
+    to {
+        opacity: 0.9;
+        transform: translateY(-2px) scale(1.08);
+    }
+}
+
+/* ---------------------------------------------------------
+   NIGHT MODE — deeper purple after 21:00
+--------------------------------------------------------- */
+
+.day-night .ritual-flame {
+    filter:
+        drop-shadow(0 0 32px rgba(120, 0, 200, 1)) drop-shadow(0 0 18px rgba(180, 0, 240, 1));
+}
+
+.day-night .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(120, 0, 200, 0.85),
+        0 18px 48px rgba(120, 0, 200, 0.95);
+}
+
+.day-night .ritual-button {
+    background: #3a0054;
+}
+
+.day-night .ritual-button:hover {
+    background: #4d0072;
+}
+
+/* ---------------------------------------------------------
+   SEASONAL PURPLE VARIANTS
+--------------------------------------------------------- */
+
+/* Winter — cool lavender */
+.ritual-winter .ritual-flame {
+    filter:
+        drop-shadow(0 0 22px rgba(140, 120, 255, 1)) drop-shadow(0 0 12px rgba(180, 160, 255, 0.85));
+}
+
+/* Spring — soft violet */
+.ritual-spring .ritual-flame {
+    filter:
+        drop-shadow(0 0 22px rgba(150, 80, 200, 1)) drop-shadow(0 0 12px rgba(190, 120, 240, 0.85));
+}
+
+/* Summer — bright orchid */
+.ritual-summer .ritual-flame {
+    filter:
+        drop-shadow(0 0 22px rgba(180, 0, 220, 1)) drop-shadow(0 0 12px rgba(220, 80, 255, 0.85));
+}
+
+/* Autumn — deep plum */
+.ritual-autumn .ritual-flame {
+    filter:
+        drop-shadow(0 0 22px rgba(110, 0, 140, 1)) drop-shadow(0 0 12px rgba(150, 0, 180, 0.85));
+}
+
+/* Harvest — warm wine */
+.ritual-harvest .ritual-flame {
+    filter:
+        drop-shadow(0 0 22px rgba(140, 0, 100, 1)) drop-shadow(0 0 12px rgba(180, 0, 140, 0.85));
+}
+
+/* ---------------------------------------------------------
+   MOONLIT RITUAL — Night + Winter
+   icy lavender flame + moon-glow aura
+--------------------------------------------------------- */
+
+.day-night.ritual-winter .ritual-flame {
+    filter:
+        drop-shadow(0 0 34px rgba(180, 160, 255, 1))
+        /* icy lavender glow */
+        drop-shadow(0 0 20px rgba(210, 190, 255, 1));
+    /* moonlit halo */
+    animation: moonlitFlame 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes moonlitFlame {
+    from {
+        opacity: 0.85;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 26px rgba(180, 160, 255, 1)) drop-shadow(0 0 14px rgba(210, 190, 255, 1));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.25);
+        filter:
+            drop-shadow(0 0 40px rgba(210, 190, 255, 1)) drop-shadow(0 0 22px rgba(240, 220, 255, 1));
+    }
+}
+
+/* Moonlit hover aura */
+.day-night.ritual-winter .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(200, 180, 255, 0.85),
+        /* icy lavender edge */
+        0 20px 52px rgba(200, 180, 255, 0.95);
+    /* moon-glow bloom */
+}
+
+/* Moonlit button */
+.day-night.ritual-winter .ritual-button {
+    background: #3f2a7a;
+    /* cool moonlit plum */
+    color: #f3eaff;
+}
+
+.day-night.ritual-winter .ritual-button:hover {
+    background: #4c3390;
+    box-shadow: 0 4px 16px rgba(200, 180, 255, 0.55);
+}
+
+/* Moonlit shimmer wash */
+.day-night.ritual-winter .ritual-container.ritual-shimmer::after {
+    animation: moonlitShimmer 1.4s ease forwards;
+}
+
+@keyframes moonlitShimmer {
+    0% {
+        background: rgba(200, 180, 255, 0.0);
+    }
+
+    40% {
+        background: rgba(200, 180, 255, 0.35);
+    }
+
+    100% {
+        background: rgba(200, 180, 255, 0.0);
+    }
+}
+
+/* ---------------------------------------------------------
+   STORM MOON RITUAL — Night + Winter + Rain
+   deep indigo flame + storm flicker + moon-shadow aura
+--------------------------------------------------------- */
+
+.day-night.ritual-winter.weather-rain .ritual-flame {
+    filter:
+        drop-shadow(0 0 40px rgba(40, 0, 90, 1))
+        /* deep indigo core */
+        drop-shadow(0 0 26px rgba(80, 0, 160, 1))
+        /* storm violet glow */
+        drop-shadow(0 0 18px rgba(120, 0, 200, 0.85));
+    /* moonlit lavender edge */
+
+    animation: stormMoonFlame 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes stormMoonFlame {
+    0% {
+        opacity: 0.75;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 32px rgba(40, 0, 90, 1)) drop-shadow(0 0 20px rgba(80, 0, 160, 1)) drop-shadow(0 0 14px rgba(120, 0, 200, 0.85));
+    }
+
+    50% {
+        opacity: 0.9;
+        transform: translateY(-3px) scale(1.12);
+        filter:
+            drop-shadow(0 0 46px rgba(60, 0, 120, 1)) drop-shadow(0 0 28px rgba(100, 0, 180, 1)) drop-shadow(0 0 18px rgba(150, 0, 220, 1));
+    }
+
+    100% {
+        opacity: 0.8;
+        transform: translateY(-1px) scale(1.06);
+        filter:
+            drop-shadow(0 0 38px rgba(40, 0, 90, 1)) drop-shadow(0 0 22px rgba(80, 0, 160, 1)) drop-shadow(0 0 16px rgba(120, 0, 200, 0.85));
+    }
+}
+
+/* Storm Moon Aura */
+.day-night.ritual-winter.weather-rain .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(60, 0, 120, 0.85),
+        /* indigo edge */
+        0 24px 60px rgba(60, 0, 120, 0.95),
+        /* storm moon bloom */
+        0 0 40px rgba(120, 0, 200, 0.45);
+    /* lavender moon halo */
+}
+
+/* Storm Moon Button */
+.day-night.ritual-winter.weather-rain .ritual-button {
+    background: #2a0048;
+    /* storm indigo plum */
+    color: #f3eaff;
+    border: 1px solid rgba(200, 180, 255, 0.25);
+}
+
+.day-night.ritual-winter.weather-rain .ritual-button:hover {
+    background: #3a0062;
+    box-shadow: 0 4px 18px rgba(120, 0, 200, 0.55);
+}
+
+.day-night.ritual-winter.weather-rain .ritual-button:active {
+    background: #1f0036;
+}
+
+/* Storm Moon Shimmer */
+.day-night.ritual-winter.weather-rain .ritual-container.ritual-shimmer::after {
+    animation: stormMoonShimmer 1.8s ease forwards;
+}
+
+@keyframes stormMoonShimmer {
+    0% {
+        background: rgba(60, 0, 120, 0.0);
+    }
+
+    40% {
+        background: rgba(60, 0, 120, 0.35);
+    }
+
+    100% {
+        background: rgba(60, 0, 120, 0.0);
+    }
+}
+
+/* ---------------------------------------------------------
+   AURORA RITUAL — Night + Winter + Clear Sky
+   green-violet aurora flame + moon-aurora glow
+--------------------------------------------------------- */
+
+.day-night.ritual-winter.weather-sun .ritual-flame {
+    filter:
+        drop-shadow(0 0 40px rgba(0, 255, 180, 1))
+        /* aurora green core */
+        drop-shadow(0 0 28px rgba(120, 0, 200, 1))
+        /* violet aurora edge */
+        drop-shadow(0 0 20px rgba(180, 220, 255, 1));
+    /* moonlit halo */
+
+    animation: auroraFlame 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes auroraFlame {
+    0% {
+        opacity: 0.85;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 32px rgba(0, 255, 180, 1)) drop-shadow(0 0 22px rgba(120, 0, 200, 1)) drop-shadow(0 0 16px rgba(180, 220, 255, 1));
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1.28);
+        filter:
+            drop-shadow(0 0 48px rgba(0, 255, 200, 1)) drop-shadow(0 0 32px rgba(150, 0, 240, 1)) drop-shadow(0 0 24px rgba(210, 240, 255, 1));
+    }
+
+    100% {
+        opacity: 0.9;
+        transform: translateY(-3px) scale(1.15);
+        filter:
+            drop-shadow(0 0 38px rgba(0, 255, 180, 1)) drop-shadow(0 0 26px rgba(120, 0, 200, 1)) drop-shadow(0 0 18px rgba(180, 220, 255, 1));
+    }
+}
+
+/* Aurora Hover Aura */
+.day-night.ritual-winter.weather-sun .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(0, 255, 180, 0.85),
+        /* aurora green edge */
+        0 24px 60px rgba(120, 0, 200, 0.95),
+        /* violet aurora bloom */
+        0 0 40px rgba(180, 220, 255, 0.55);
+    /* moonlit halo */
+}
+
+/* Aurora Button */
+.day-night.ritual-winter.weather-sun .ritual-button {
+    background: #2a0060;
+    /* aurora plum */
+    color: #e8faff;
+    border: 1px solid rgba(180, 220, 255, 0.35);
+}
+
+.day-night.ritual-winter.weather-sun .ritual-button:hover {
+    background: #36007a;
+    box-shadow: 0 4px 18px rgba(0, 255, 180, 0.55);
+}
+
+.day-night.ritual-winter.weather-sun .ritual-button:active {
+    background: #1e0048;
+}
+
+/* Aurora Shimmer */
+.day-night.ritual-winter.weather-sun .ritual-container.ritual-shimmer::after {
+    animation: auroraShimmer 1.6s ease forwards;
+}
+
+@keyframes auroraShimmer {
+    0% {
+        background: rgba(0, 255, 180, 0.0);
+    }
+
+    40% {
+        background: rgba(0, 255, 180, 0.35);
+    }
+
+    100% {
+        background: rgba(0, 255, 180, 0.0);
+    }
+}
+
+/* ---------------------------------------------------------
+   SUNRISE RITUAL — Morning + Spring + Clear Sky
+   soft pink-violet flame + sunrise glow
+--------------------------------------------------------- */
+
+.day-morning.ritual-spring.weather-sun .ritual-flame {
+    filter:
+        drop-shadow(0 0 34px rgba(255, 120, 180, 1))
+        /* sunrise pink core */
+        drop-shadow(0 0 22px rgba(180, 80, 220, 1))
+        /* violet sunrise edge */
+        drop-shadow(0 0 16px rgba(255, 200, 230, 1));
+    /* soft dawn halo */
+
+    animation: sunriseFlame 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes sunriseFlame {
+    0% {
+        opacity: 0.85;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 28px rgba(255, 120, 180, 1)) drop-shadow(0 0 18px rgba(180, 80, 220, 1)) drop-shadow(0 0 12px rgba(255, 200, 230, 1));
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.22);
+        filter:
+            drop-shadow(0 0 42px rgba(255, 150, 200, 1)) drop-shadow(0 0 26px rgba(200, 100, 240, 1)) drop-shadow(0 0 20px rgba(255, 220, 240, 1));
+    }
+
+    100% {
+        opacity: 0.9;
+        transform: translateY(-2px) scale(1.12);
+        filter:
+            drop-shadow(0 0 34px rgba(255, 120, 180, 1)) drop-shadow(0 0 22px rgba(180, 80, 220, 1)) drop-shadow(0 0 16px rgba(255, 200, 230, 1));
+    }
+}
+
+/* Sunrise Hover Aura */
+.day-morning.ritual-spring.weather-sun .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(255, 120, 180, 0.75),
+        /* sunrise pink edge */
+        0 20px 52px rgba(180, 80, 220, 0.85),
+        /* violet bloom */
+        0 0 36px rgba(255, 200, 230, 0.55);
+    /* dawn halo */
+}
+
+/* Sunrise Button */
+.day-morning.ritual-spring.weather-sun .ritual-button {
+    background: #6a2a8a;
+    /* sunrise plum */
+    color: #fff4fa;
+    border: 1px solid rgba(255, 200, 230, 0.35);
+}
+
+.day-morning.ritual-spring.weather-sun .ritual-button:hover {
+    background: #7c33a3;
+    box-shadow: 0 4px 16px rgba(255, 120, 180, 0.55);
+}
+
+.day-morning.ritual-spring.weather-sun .ritual-button:active {
+    background: #5a2074;
+}
+
+/* Sunrise Shimmer */
+.day-morning.ritual-spring.weather-sun .ritual-container.ritual-shimmer::after {
+    animation: sunriseShimmer 1.4s ease forwards;
+}
+
+@keyframes sunriseShimmer {
+    0% {
+        background: rgba(255, 120, 180, 0.0);
+    }
+
+    40% {
+        background: rgba(255, 120, 180, 0.35);
+    }
+
+    100% {
+        background: rgba(255, 120, 180, 0.0);
+    }
+}
+
+/* ---------------------------------------------------------
+   SOLSTICE RITUAL — Night + Summer + Clear Sky
+   golden-violet flame + warm solstice glow
+--------------------------------------------------------- */
+
+.day-night.ritual-summer.weather-sun .ritual-flame {
+    filter:
+        drop-shadow(0 0 40px rgba(255, 180, 60, 1))
+        /* golden core */
+        drop-shadow(0 0 28px rgba(160, 60, 255, 1))
+        /* violet edge */
+        drop-shadow(0 0 20px rgba(255, 220, 160, 1));
+    /* warm halo */
+
+    animation: solsticeFlame 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes solsticeFlame {
+    0% {
+        opacity: 0.85;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 32px rgba(255, 180, 60, 1)) drop-shadow(0 0 22px rgba(160, 60, 255, 1)) drop-shadow(0 0 16px rgba(255, 220, 160, 1));
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1.28);
+        filter:
+            drop-shadow(0 0 48px rgba(255, 200, 80, 1)) drop-shadow(0 0 32px rgba(180, 80, 255, 1)) drop-shadow(0 0 24px rgba(255, 230, 180, 1));
+    }
+
+    100% {
+        opacity: 0.9;
+        transform: translateY(-3px) scale(1.15);
+        filter:
+            drop-shadow(0 0 38px rgba(255, 180, 60, 1)) drop-shadow(0 0 26px rgba(160, 60, 255, 1)) drop-shadow(0 0 18px rgba(255, 220, 160, 1));
+    }
+}
+
+/* Solstice Hover Aura */
+.day-night.ritual-summer.weather-sun .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(255, 180, 60, 0.85),
+        /* golden edge */
+        0 24px 60px rgba(160, 60, 255, 0.95),
+        /* violet bloom */
+        0 0 40px rgba(255, 220, 160, 0.55);
+    /* warm halo */
+}
+
+/* Solstice Button */
+.day-night.ritual-summer.weather-sun .ritual-button {
+    background: #5a2074;
+    /* solstice plum */
+    color: #fff7e6;
+    border: 1px solid rgba(255, 220, 160, 0.35);
+}
+
+.day-night.ritual-summer.weather-sun .ritual-button:hover {
+    background: #6c2a8c;
+    box-shadow: 0 4px 18px rgba(255, 180, 60, 0.55);
+}
+
+.day-night.ritual-summer.weather-sun .ritual-button:active {
+    background: #4a1760;
+}
+
+/* Solstice Shimmer */
+.day-night.ritual-summer.weather-sun .ritual-container.ritual-shimmer::after {
+    animation: solsticeShimmer 1.6s ease forwards;
+}
+
+@keyframes solsticeShimmer {
+    0% {
+        background: rgba(255, 180, 60, 0.0);
+    }
+
+    40% {
+        background: rgba(255, 180, 60, 0.35);
+    }
+
+    100% {
+        background: rgba(255, 180, 60, 0.0);
+    }
+}
+
+/* ---------------------------------------------------------
+   EQUINOX RITUAL — Night + Spring + Clear Sky
+   teal-violet flame + cool equinox glow
+--------------------------------------------------------- */
+
+.day-night.ritual-spring.weather-sun .ritual-flame {
+    filter:
+        drop-shadow(0 0 40px rgba(0, 220, 200, 1))
+        /* teal core */
+        drop-shadow(0 0 28px rgba(140, 60, 255, 1))
+        /* violet edge */
+        drop-shadow(0 0 20px rgba(200, 240, 255, 1));
+    /* cool moon halo */
+
+    animation: equinoxFlame 1.9s ease-in-out infinite alternate;
+}
+
+@keyframes equinoxFlame {
+    0% {
+        opacity: 0.85;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 32px rgba(0, 220, 200, 1)) drop-shadow(0 0 22px rgba(140, 60, 255, 1)) drop-shadow(0 0 16px rgba(200, 240, 255, 1));
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.25);
+        filter:
+            drop-shadow(0 0 48px rgba(0, 255, 220, 1)) drop-shadow(0 0 32px rgba(160, 80, 255, 1)) drop-shadow(0 0 24px rgba(220, 255, 255, 1));
+    }
+
+    100% {
+        opacity: 0.9;
+        transform: translateY(-2px) scale(1.12);
+        filter:
+            drop-shadow(0 0 38px rgba(0, 220, 200, 1)) drop-shadow(0 0 26px rgba(140, 60, 255, 1)) drop-shadow(0 0 18px rgba(200, 240, 255, 1));
+    }
+}
+
+/* Equinox Hover Aura */
+.day-night.ritual-spring.weather-sun .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(0, 220, 200, 0.85),
+        /* teal edge */
+        0 24px 60px rgba(140, 60, 255, 0.95),
+        /* violet bloom */
+        0 0 40px rgba(200, 240, 255, 0.55);
+    /* cool halo */
+}
+
+/* Equinox Button */
+.day-night.ritual-spring.weather-sun .ritual-button {
+    background: #4a1a72;
+    /* equinox plum */
+    color: #eaffff;
+    border: 1px solid rgba(200, 240, 255, 0.35);
+}
+
+.day-night.ritual-spring.weather-sun .ritual-button:hover {
+    background: #57208a;
+    box-shadow: 0 4px 18px rgba(0, 220, 200, 0.55);
+}
+
+.day-night.ritual-spring.weather-sun .ritual-button:active {
+    background: #3a1458;
+}
+
+/* Equinox Shimmer */
+.day-night.ritual-spring.weather-sun .ritual-container.ritual-shimmer::after {
+    animation: equinoxShimmer 1.6s ease forwards;
+}
+
+@keyframes equinoxShimmer {
+    0% {
+        background: rgba(0, 220, 200, 0.0);
+    }
+
+    40% {
+        background: rgba(0, 220, 200, 0.35);
+    }
+
+    100% {
+        background: rgba(0, 220, 200, 0.0);
+    }
+}
+
+/* ---------------------------------------------------------
+   DUSK RITUAL — Evening + Autumn + Clear Sky
+   amber-plum flame + warm dusk glow
+--------------------------------------------------------- */
+
+.day-evening.ritual-autumn.weather-sun .ritual-flame {
+    filter:
+        drop-shadow(0 0 40px rgba(255, 140, 60, 1))
+        /* amber core */
+        drop-shadow(0 0 28px rgba(140, 40, 120, 1))
+        /* plum edge */
+        drop-shadow(0 0 20px rgba(255, 200, 160, 1));
+    /* dusk halo */
+
+    animation: duskFlame 2s ease-in-out infinite alternate;
+}
+
+@keyframes duskFlame {
+    0% {
+        opacity: 0.85;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 32px rgba(255, 140, 60, 1)) drop-shadow(0 0 22px rgba(140, 40, 120, 1)) drop-shadow(0 0 16px rgba(255, 200, 160, 1));
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.25);
+        filter:
+            drop-shadow(0 0 48px rgba(255, 160, 80, 1)) drop-shadow(0 0 32px rgba(160, 60, 140, 1)) drop-shadow(0 0 24px rgba(255, 210, 180, 1));
+    }
+
+    100% {
+        opacity: 0.9;
+        transform: translateY(-2px) scale(1.12);
+        filter:
+            drop-shadow(0 0 38px rgba(255, 140, 60, 1)) drop-shadow(0 0 26px rgba(140, 40, 120, 1)) drop-shadow(0 0 18px rgba(255, 200, 160, 1));
+    }
+}
+
+/* Dusk Hover Aura */
+.day-evening.ritual-autumn.weather-sun .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(255, 140, 60, 0.85),
+        /* amber edge */
+        0 24px 60px rgba(140, 40, 120, 0.95),
+        /* plum bloom */
+        0 0 40px rgba(255, 200, 160, 0.55);
+    /* dusk halo */
+}
+
+/* Dusk Button */
+.day-evening.ritual-autumn.weather-sun .ritual-button {
+    background: #5a1a60;
+    /* dusk plum */
+    color: #fff5e8;
+    border: 1px solid rgba(255, 200, 160, 0.35);
+}
+
+.day-evening.ritual-autumn.weather-sun .ritual-button:hover {
+    background: #6c2074;
+    box-shadow: 0 4px 18px rgba(255, 140, 60, 0.55);
+}
+
+.day-evening.ritual-autumn.weather-sun .ritual-button:active {
+    background: #4a1450;
+}
+
+/* Dusk Shimmer */
+.day-evening.ritual-autumn.weather-sun .ritual-container.ritual-shimmer::after {
+    animation: duskShimmer 1.6s ease forwards;
+}
+
+@keyframes duskShimmer {
+    0% {
+        background: rgba(255, 140, 60, 0.0);
+    }
+
+    40% {
+        background: rgba(255, 140, 60, 0.35);
+    }
+
+    100% {
+        background: rgba(255, 140, 60, 0.0);
+    }
+}
+
+/* ---------------------------------------------------------
+   HARVEST MOON RITUAL — Night + Autumn + Clear Sky
+   amber-violet moon flame + autumn moon glow
+--------------------------------------------------------- */
+
+.day-night.ritual-autumn.weather-sun .ritual-flame {
+    filter:
+        drop-shadow(0 0 42px rgba(255, 160, 80, 1))
+        /* amber moon core */
+        drop-shadow(0 0 30px rgba(160, 60, 255, 1))
+        /* violet moon edge */
+        drop-shadow(0 0 22px rgba(255, 220, 180, 1));
+    /* moon halo */
+
+    animation: harvestMoonFlame 2.1s ease-in-out infinite alternate;
+}
+
+@keyframes harvestMoonFlame {
+    0% {
+        opacity: 0.85;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 34px rgba(255, 160, 80, 1)) drop-shadow(0 0 24px rgba(160, 60, 255, 1)) drop-shadow(0 0 18px rgba(255, 220, 180, 1));
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1.28);
+        filter:
+            drop-shadow(0 0 52px rgba(255, 180, 100, 1)) drop-shadow(0 0 36px rgba(180, 80, 255, 1)) drop-shadow(0 0 26px rgba(255, 230, 200, 1));
+    }
+
+    100% {
+        opacity: 0.9;
+        transform: translateY(-3px) scale(1.15);
+        filter:
+            drop-shadow(0 0 40px rgba(255, 160, 80, 1)) drop-shadow(0 0 28px rgba(160, 60, 255, 1)) drop-shadow(0 0 20px rgba(255, 220, 180, 1));
+    }
+}
+
+/* Harvest Moon Hover Aura */
+.day-night.ritual-autumn.weather-sun .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(255, 160, 80, 0.85),
+        /* amber moon edge */
+        0 26px 64px rgba(160, 60, 255, 0.95),
+        /* violet moon bloom */
+        0 0 44px rgba(255, 220, 180, 0.55);
+    /* moon halo */
+}
+
+/* Harvest Moon Button */
+.day-night.ritual-autumn.weather-sun .ritual-button {
+    background: #552060;
+    /* moon-plum */
+    color: #fff7e8;
+    border: 1px solid rgba(255, 220, 180, 0.35);
+}
+
+.day-night.ritual-autumn.weather-sun .ritual-button:hover {
+    background: #642874;
+    box-shadow: 0 4px 20px rgba(255, 160, 80, 0.55);
+}
+
+.day-night.ritual-autumn.weather-sun .ritual-button:active {
+    background: #43164c;
+}
+
+/* Harvest Moon Shimmer */
+.day-night.ritual-autumn.weather-sun .ritual-container.ritual-shimmer::after {
+    animation: harvestMoonShimmer 1.7s ease forwards;
+}
+
+@keyframes harvestMoonShimmer {
+    0% {
+        background: rgba(255, 160, 80, 0.0);
+    }
+
+    40% {
+        background: rgba(255, 160, 80, 0.35);
+    }
+
+    100% {
+        background: rgba(255, 160, 80, 0.0);
+    }
+}
+
+/* ---------------------------------------------------------
+   ZENITH RITUAL — Noon + Summer + Clear Sky
+   bright gold-violet flame + solar glow
+--------------------------------------------------------- */
+
+.day-noon.ritual-summer.weather-sun .ritual-flame {
+    filter:
+        drop-shadow(0 0 46px rgba(255, 200, 60, 1))
+        /* bright gold core */
+        drop-shadow(0 0 32px rgba(160, 60, 255, 1))
+        /* violet solar edge */
+        drop-shadow(0 0 24px rgba(255, 230, 160, 1));
+    /* warm solar halo */
+
+    animation: zenithFlame 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes zenithFlame {
+    0% {
+        opacity: 0.9;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 38px rgba(255, 200, 60, 1)) drop-shadow(0 0 26px rgba(160, 60, 255, 1)) drop-shadow(0 0 18px rgba(255, 230, 160, 1));
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-7px) scale(1.32);
+        filter:
+            drop-shadow(0 0 58px rgba(255, 220, 80, 1)) drop-shadow(0 0 38px rgba(180, 80, 255, 1)) drop-shadow(0 0 28px rgba(255, 240, 180, 1));
+    }
+
+    100% {
+        opacity: 0.95;
+        transform: translateY(-3px) scale(1.18);
+        filter:
+            drop-shadow(0 0 46px rgba(255, 200, 60, 1)) drop-shadow(0 0 32px rgba(160, 60, 255, 1)) drop-shadow(0 0 22px rgba(255, 230, 160, 1));
+    }
+}
+
+/* Zenith Hover Aura */
+.day-noon.ritual-summer.weather-sun .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(255, 200, 60, 0.85),
+        /* gold edge */
+        0 28px 70px rgba(160, 60, 255, 0.95),
+        /* violet bloom */
+        0 0 48px rgba(255, 230, 160, 0.55);
+    /* solar halo */
+}
+
+/* Zenith Button */
+.day-noon.ritual-summer.weather-sun .ritual-button {
+    background: #6a2074;
+    /* solar plum */
+    color: #fff9e6;
+    border: 1px solid rgba(255, 230, 160, 0.35);
+}
+
+.day-noon.ritual-summer.weather-sun .ritual-button:hover {
+    background: #7c2a8c;
+    box-shadow: 0 4px 22px rgba(255, 200, 60, 0.55);
+}
+
+.day-noon.ritual-summer.weather-sun .ritual-button:active {
+    background: #5a1760;
+}
+
+/* Zenith Shimmer */
+.day-noon.ritual-summer.weather-sun .ritual-container.ritual-shimmer::after {
+    animation: zenithShimmer 1.4s ease forwards;
+}
+
+@keyframes zenithShimmer {
+    0% {
+        background: rgba(255, 200, 60, 0.0);
+    }
+
+    40% {
+        background: rgba(255, 200, 60, 0.35);
+    }
+
+    100% {
+        background: rgba(255, 200, 60, 0.0);
+    }
+}
+
+/* ---------------------------------------------------------
+   TWILIGHT RITUAL — Evening + Winter + Clear Sky
+   blue-lavender flame + cool twilight glow
+--------------------------------------------------------- */
+
+.day-evening.ritual-winter.weather-sun .ritual-flame {
+    filter:
+        drop-shadow(0 0 40px rgba(80, 140, 255, 1))
+        /* twilight blue core */
+        drop-shadow(0 0 28px rgba(160, 120, 255, 1))
+        /* lavender edge */
+        drop-shadow(0 0 20px rgba(200, 220, 255, 1));
+    /* frost halo */
+
+    animation: twilightFlame 2s ease-in-out infinite alternate;
+}
+
+@keyframes twilightFlame {
+    0% {
+        opacity: 0.85;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 32px rgba(80, 140, 255, 1)) drop-shadow(0 0 22px rgba(160, 120, 255, 1)) drop-shadow(0 0 16px rgba(200, 220, 255, 1));
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.25);
+        filter:
+            drop-shadow(0 0 48px rgba(100, 160, 255, 1)) drop-shadow(0 0 32px rgba(180, 140, 255, 1)) drop-shadow(0 0 24px rgba(220, 240, 255, 1));
+    }
+
+    100% {
+        opacity: 0.9;
+        transform: translateY(-2px) scale(1.12);
+        filter:
+            drop-shadow(0 0 38px rgba(80, 140, 255, 1)) drop-shadow(0 0 26px rgba(160, 120, 255, 1)) drop-shadow(0 0 18px rgba(200, 220, 255, 1));
+    }
+}
+
+/* Twilight Hover Aura */
+.day-evening.ritual-winter.weather-sun .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(80, 140, 255, 0.85),
+        /* twilight blue edge */
+        0 24px 60px rgba(160, 120, 255, 0.95),
+        /* lavender bloom */
+        0 0 40px rgba(200, 220, 255, 0.55);
+    /* frost halo */
+}
+
+/* Twilight Button */
+.day-evening.ritual-winter.weather-sun .ritual-button {
+    background: #3a1a72;
+    /* frost-plum */
+    color: #eef2ff;
+    border: 1px solid rgba(200, 220, 255, 0.35);
+}
+
+.day-evening.ritual-winter.weather-sun .ritual-button:hover {
+    background: #46208a;
+    box-shadow: 0 4px 18px rgba(80, 140, 255, 0.55);
+}
+
+.day-evening.ritual-winter.weather-sun .ritual-button:active {
+    background: #2c1458;
+}
+
+/* Twilight Shimmer */
+.day-evening.ritual-winter.weather-sun .ritual-container.ritual-shimmer::after {
+    animation: twilightShimmer 1.6s ease forwards;
+}
+
+@keyframes twilightShimmer {
+    0% {
+        background: rgba(80, 140, 255, 0.0);
+    }
+
+    40% {
+        background: rgba(80, 140, 255, 0.35);
+    }
+
+    100% {
+        background: rgba(80, 140, 255, 0.0);
+    }
+}
+
+/* ---------------------------------------------------------
+   MIDNIGHT ORCHARD RITUAL — Night + Summer + Rain
+   deep plum-orchid flame + midnight orchard glow
+--------------------------------------------------------- */
+
+.day-night.ritual-summer.weather-rain .ritual-flame {
+    filter:
+        drop-shadow(0 0 42px rgba(80, 0, 120, 1))
+        /* deep plum core */
+        drop-shadow(0 0 30px rgba(160, 0, 200, 1))
+        /* orchid glow */
+        drop-shadow(0 0 22px rgba(200, 120, 255, 0.85));
+    /* moonlit orchid halo */
+
+    animation: orchardFlame 2.6s ease-in-out infinite alternate;
+}
+
+@keyframes orchardFlame {
+    0% {
+        opacity: 0.75;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 34px rgba(80, 0, 120, 1)) drop-shadow(0 0 24px rgba(160, 0, 200, 1)) drop-shadow(0 0 18px rgba(200, 120, 255, 0.85));
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.20);
+        filter:
+            drop-shadow(0 0 52px rgba(110, 0, 160, 1)) drop-shadow(0 0 34px rgba(180, 0, 220, 1)) drop-shadow(0 0 26px rgba(220, 150, 255, 1));
+    }
+
+    100% {
+        opacity: 0.85;
+        transform: translateY(-2px) scale(1.10);
+        filter:
+            drop-shadow(0 0 40px rgba(80, 0, 120, 1)) drop-shadow(0 0 28px rgba(160, 0, 200, 1)) drop-shadow(0 0 20px rgba(200, 120, 255, 0.85));
+    }
+}
+
+/* Midnight Orchard Hover Aura */
+.day-night.ritual-summer.weather-rain .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(110, 0, 160, 0.85),
+        /* plum edge */
+        0 26px 64px rgba(160, 0, 200, 0.95),
+        /* orchid bloom */
+        0 0 44px rgba(200, 120, 255, 0.55);
+    /* moonlit halo */
+}
+
+/* Midnight Orchard Button */
+.day-night.ritual-summer.weather-rain .ritual-button {
+    background: #4a0058;
+    /* orchard plum */
+    color: #f8eaff;
+    border: 1px solid rgba(200, 120, 255, 0.35);
+}
+
+.day-night.ritual-summer.weather-rain .ritual-button:hover {
+    background: #5c0072;
+    box-shadow: 0 4px 20px rgba(160, 0, 200, 0.55);
+}
+
+.day-night.ritual-summer.weather-rain .ritual-button:active {
+    background: #360040;
+}
+
+/* Midnight Orchard Shimmer */
+.day-night.ritual-summer.weather-rain .ritual-container.ritual-shimmer::after {
+    animation: orchardShimmer 1.9s ease forwards;
+}
+
+@keyframes orchardShimmer {
+    0% {
+        background: rgba(160, 0, 200, 0.0);
+    }
+
+    40% {
+        background: rgba(160, 0, 200, 0.35);
+    }
+
+    100% {
+        background: rgba(160, 0, 200, 0.0);
+    }
+}
+
+/* ---------------------------------------------------------
+   RAIN-BLOOM RITUAL — Spring + Rain
+   soft teal-pink flame + gentle bloom glow
+--------------------------------------------------------- */
+
+.ritual-spring.weather-rain .ritual-flame {
+    filter:
+        drop-shadow(0 0 34px rgba(0, 200, 180, 1))
+        /* teal core */
+        drop-shadow(0 0 22px rgba(255, 120, 180, 1))
+        /* pink bloom edge */
+        drop-shadow(0 0 16px rgba(200, 240, 255, 1));
+    /* soft rain halo */
+
+    animation: rainBloomFlame 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes rainBloomFlame {
+    0% {
+        opacity: 0.75;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 28px rgba(0, 200, 180, 1)) drop-shadow(0 0 18px rgba(255, 120, 180, 1)) drop-shadow(0 0 12px rgba(200, 240, 255, 1));
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-3px) scale(1.18);
+        filter:
+            drop-shadow(0 0 42px rgba(0, 230, 200, 1)) drop-shadow(0 0 26px rgba(255, 150, 200, 1)) drop-shadow(0 0 20px rgba(220, 255, 255, 1));
+    }
+
+    100% {
+        opacity: 0.85;
+        transform: translateY(-1px) scale(1.10);
+        filter:
+            drop-shadow(0 0 34px rgba(0, 200, 180, 1)) drop-shadow(0 0 22px rgba(255, 120, 180, 1)) drop-shadow(0 0 16px rgba(200, 240, 255, 1));
+    }
+}
+
+/* Rain-Bloom Hover Aura */
+.ritual-spring.weather-rain .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(0, 200, 180, 0.85),
+        /* teal edge */
+        0 24px 60px rgba(255, 120, 180, 0.95),
+        /* pink bloom */
+        0 0 40px rgba(200, 240, 255, 0.55);
+    /* rain halo */
+}
+
+/* Rain-Bloom Button */
+.ritual-spring.weather-rain .ritual-button {
+    background: #3a2074;
+    /* bloom plum */
+    color: #f7fcff;
+    border: 1px solid rgba(200, 240, 255, 0.35);
+}
+
+.ritual-spring.weather-rain .ritual-button:hover {
+    background: #46208a;
+    box-shadow: 0 4px 18px rgba(0, 200, 180, 0.55);
+}
+
+.ritual-spring.weather-rain .ritual-button:active {
+    background: #2c1458;
+}
+
+/* Rain-Bloom Shimmer */
+.ritual-spring.weather-rain .ritual-container.ritual-shimmer::after {
+    animation: rainBloomShimmer 1.8s ease forwards;
+}
+
+@keyframes rainBloomShimmer {
+    0% {
+        background: rgba(0, 200, 180, 0.0);
+    }
+
+    40% {
+        background: rgba(0, 200, 180, 0.35);
+    }
+
+    100% {
+        background: rgba(0, 200, 180, 0.0);
+    }
+}
+
+/* ---------------------------------------------------------
+   SNOW-GLOW RITUAL — Winter + Snow
+   icy blue-white flame + cold moonlit glow
+--------------------------------------------------------- */
+
+.ritual-winter.weather-snow .ritual-flame {
+    filter:
+        drop-shadow(0 0 40px rgba(160, 200, 255, 1))
+        /* icy blue core */
+        drop-shadow(0 0 28px rgba(220, 240, 255, 1))
+        /* frost edge */
+        drop-shadow(0 0 22px rgba(255, 255, 255, 1));
+    /* snow halo */
+
+    animation: snowGlowFlame 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes snowGlowFlame {
+    0% {
+        opacity: 0.8;
+        transform: translateY(0) scale(1);
+        filter:
+            drop-shadow(0 0 32px rgba(160, 200, 255, 1)) drop-shadow(0 0 22px rgba(220, 240, 255, 1)) drop-shadow(0 0 16px rgba(255, 255, 255, 1));
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.22);
+        filter:
+            drop-shadow(0 0 48px rgba(180, 220, 255, 1)) drop-shadow(0 0 32px rgba(240, 255, 255, 1)) drop-shadow(0 0 24px rgba(255, 255, 255, 1));
+    }
+
+    100% {
+        opacity: 0.9;
+        transform: translateY(-2px) scale(1.12);
+        filter:
+            drop-shadow(0 0 40px rgba(160, 200, 255, 1)) drop-shadow(0 0 28px rgba(220, 240, 255, 1)) drop-shadow(0 0 20px rgba(255, 255, 255, 1));
+    }
+}
+
+/* Snow-Glow Hover Aura */
+.ritual-winter.weather-snow .ritual-container:hover {
+    box-shadow:
+        0 0 0 4px rgba(160, 200, 255, 0.85),
+        /* icy edge */
+        0 24px 60px rgba(220, 240, 255, 0.95),
+        /* frost bloom */
+        0 0 40px rgba(255, 255, 255, 0.55);
+    /* snow halo */
+}
+
+/* Snow-Glow Button */
+.ritual-winter.weather-snow .ritual-button {
+    background: #2a2a72;
+    /* icy plum */
+    color: #f8fbff;
+    border: 1px solid rgba(220, 240, 255, 0.35);
+}
+
+.ritual-winter.weather-snow .ritual-button:hover {
+    background: #34348a;
+    box-shadow: 0 4px 18px rgba(160, 200, 255, 0.55);
+}
+
+.ritual-winter.weather-snow .ritual-button:active {
+    background: #1e1e58;
+}
+
+/* Snow-Glow Shimmer */
+.ritual-winter.weather-snow .ritual-container.ritual-shimmer::after {
+    animation: snowGlowShimmer 1.9s ease forwards;
+}
+
+@keyframes snowGlowShimmer {
+    0% {
+        background: rgba(160, 200, 255, 0.0);
+    }
+
+    40% {
+        background: rgba(160, 200, 255, 0.35);
+    }
+
+    100% {
+        background: rgba(160, 200, 255, 0.0);
+    }
+}

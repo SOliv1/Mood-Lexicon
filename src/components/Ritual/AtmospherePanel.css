@@ -1,0 +1,67 @@
+.atmosphere-panel {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 1rem 1.2rem;
+    border-radius: 14px;
+    background: rgba(20, 20, 30, 0.75);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    color: #f0eaff;
+    font-family: "Inter", sans-serif;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 9999;
+}
+
+.atmosphere-panel-day {
+    color: #1d2939;
+    border: 1px solid rgba(29, 41, 57, 0.25);
+}
+
+.atmosphere-panel-night {
+    color: #f8f5ff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.atmosphere-title {
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    opacity: 0.9;
+}
+
+.atmosphere-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+}
+
+.atmosphere-label {
+    opacity: 0.7;
+}
+
+.atmosphere-panel-day .atmosphere-label {
+    opacity: 1;
+    color: #334155;
+}
+
+.atmosphere-panel-night .atmosphere-label {
+    opacity: 0.82;
+}
+
+.atmosphere-value {
+    font-weight: 500;
+}
+
+.atmosphere-final {
+    margin-top: 0.8rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    font-weight: 600;
+    opacity: 0.95;
+}
+
+.atmosphere-panel-day .atmosphere-final {
+    border-top: 1px solid rgba(29, 41, 57, 0.24);
+}

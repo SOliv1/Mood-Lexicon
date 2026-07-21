@@ -1,19 +1,43 @@
-import Quote from '../components/Quote/Quote';
-import MoodDisplay from '../features/mood/MoodDisplay';
-import MoodDetail from '../components/Mood/MoodDetail';
-import TasksCard from '../components/Tasks/TasksCard';
-import './HomePage.css';
-import '../components/Mood/MoodDetail.css';
+import MoodDisplay from "../features/mood/MoodDisplay";
+import AtmospherePanel from "../components/Ritual/AtmospherePanel";
+import AtmosphericButtons from "../components/Ritual/AtmosphericButtons";
+import { type TimeMode, type SeasonMode, type WeatherMode } from "../theme/atmosphere";
 
-export default function HomePage() {
+type HomePageProps = {
+  timeMode: TimeMode;
+  seasonMode: SeasonMode;
+  weatherMode: WeatherMode;
+  setTimeMode: (mode: TimeMode) => void;
+  setSeasonMode: (mode: SeasonMode) => void;
+  setWeatherMode: (mode: WeatherMode) => void;
+};
+
+export default function HomePage({
+  timeMode,
+  seasonMode,
+  weatherMode,
+  setTimeMode,
+  setSeasonMode,
+  setWeatherMode,
+}: HomePageProps) {
+
+
   return (
-    <div className="homepage">
-      <main className="main-content">
-        <Quote />
-        <TasksCard />
-        <MoodDisplay />
-        <MoodDetail />
-      </main>
-    </div>
+    <>
+      <MoodDisplay weatherMode={weatherMode} />
+
+      <AtmospherePanel
+        timeMode={timeMode}
+        seasonMode={seasonMode}
+        weatherMode={weatherMode}
+      />
+
+      <AtmosphericButtons
+        setTimeMode={setTimeMode}
+        setSeasonMode={setSeasonMode}
+        setWeatherMode={setWeatherMode}
+        weatherMode={weatherMode}
+      />
+    </>
   );
 }

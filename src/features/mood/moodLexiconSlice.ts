@@ -1,12 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { moods } from '../../data/moods';
 
+
+
+
 // Map UI mood → Lexicon mood ID
 const moodMap: Record<string, string> = {
   calm: 'calm',
   uplifted: 'uplifted',
   peaceful: 'peaceful',
-  energetic: 'energetic'
+  energetic: 'energetic',
+  abundance: 'abundance',
+
 };
 
 const moodLexiconSlice = createSlice({

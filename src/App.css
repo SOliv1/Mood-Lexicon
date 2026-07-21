@@ -1,38 +1,84 @@
-.App {
-  text-align: center;
+/* Global atmospheric baseline */
+:root {
+  --atmo-top: #f7f0de;
+  --atmo-bottom: #c9ddff;
+  --atmo-overlay: rgba(255, 255, 255, 0.14);
 }
 
-.App-logo {
-  height: 40vmin;
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background:
+    radial-gradient(circle at 18% 16%, var(--atmo-overlay), transparent 45%),
+    linear-gradient(155deg, var(--atmo-top), var(--atmo-bottom));
+  background-attachment: fixed;
+  transition: background 700ms ease, color 700ms ease;
+}
+
+/* Time of day */
+.atmo-time-day {
+  --atmo-top: #fff4db;
+  --atmo-bottom: #cfe6ff;
+}
+
+.atmo-time-night {
+  --atmo-top: #0f1c36;
+  --atmo-bottom: #1f2b4d;
+}
+
+/* Real season influence */
+.atmo-season-summer {
+  --atmo-overlay: rgba(255, 231, 168, 0.18);
+}
+
+.atmo-season-winter {
+  --atmo-overlay: rgba(198, 222, 255, 0.2);
+}
+
+/* Weather overlays */
+.atmo-weather-rain body::before,
+.atmo-weather-snow body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
   pointer-events: none;
+  z-index: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.atmo-weather-rain body::before {
+  background: repeating-linear-gradient(-20deg,
+      rgba(172, 203, 236, 0.22) 0 2px,
+      transparent 2px 16px);
+  animation: rainSheet 1.6s linear infinite;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.atmo-weather-snow body::before {
+  background: radial-gradient(circle at 30% 30%, rgba(242, 248, 255, 0.35), transparent 48%);
+  animation: snowPulse 3.2s ease-in-out infinite alternate;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
+@keyframes rainSheet {
   from {
-    transform: rotate(0deg);
+    transform: translateY(-18px);
   }
+
   to {
-    transform: rotate(360deg);
+    transform: translateY(18px);
+  }
+}
+
+@keyframes snowPulse {
+  from {
+    opacity: 0.55;
+  }
+
+  to {
+    opacity: 0.9;
   }
 }

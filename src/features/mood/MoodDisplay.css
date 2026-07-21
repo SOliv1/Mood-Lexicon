@@ -1,0 +1,268 @@
+.mood-suggestion {
+    border-radius: 12px;
+    padding: 1rem;
+    transition:
+        background 600ms ease,
+        border-color 600ms ease,
+        box-shadow 600ms ease,
+        color 600ms ease;
+}
+
+.mood-suggestion.mood-winter {
+    background: linear-gradient(135deg, #e4f2ff 0%, #f7fbff 100%);
+    border: 1px solid #c3ddf2;
+    box-shadow: 0 10px 28px rgba(91, 138, 176, 0.18);
+    color: #27465c;
+}
+
+.mood-suggestion.mood-spring {
+    background: linear-gradient(135deg, #f5f9f2 0%, #fff8d8 100%);
+    border: 1px solid #d9e9c7;
+    box-shadow: 0 10px 28px rgba(132, 168, 96, 0.18);
+    color: #3e5633;
+}
+
+.mood-suggestion.mood-summer {
+    background: linear-gradient(135deg, #fff4d9 0%, #ffe2a8 100%);
+    border: 1px solid #f0ca74;
+    box-shadow: 0 10px 28px rgba(197, 139, 42, 0.2);
+    color: #5b421a;
+}
+
+.mood-suggestion.mood-autumn {
+    background: linear-gradient(135deg, #fff0e8 0%, #f7d2b7 100%);
+    border: 1px solid #e4aa80;
+    box-shadow: 0 10px 28px rgba(160, 92, 48, 0.2);
+    color: #5d3724;
+}
+
+.mood-suggestion.mood-harvest {
+    background: linear-gradient(135deg, #fff9f0 0%, #ead69b 100%);
+    border: 1px solid #d3b566;
+    box-shadow: 0 10px 28px rgba(157, 122, 41, 0.22);
+    color: #57451f;
+}
+
+.mood-echo {
+    opacity: 0;
+    animation: echoFade 1.8s ease forwards;
+
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+@keyframes echoFade {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mood-echo {
+    opacity: 0;
+    animation: echoFade 1.6s ease forwards;
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    color: #333;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+
+    /* Visible glow on white background */
+    text-shadow:
+        0 0 3px rgba(0, 0, 0, 0.15),
+        0 0 8px rgba(0, 0, 0, 0.12);
+}
+
+
+.season-heart {
+    margin-left: 6px;
+    font-size: 1.1rem;
+
+    /* Visible glow on white */
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.25));
+    opacity: 0.9;
+
+    animation: heartGlow 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes heartGlow {
+    from {
+        filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.15));
+    }
+
+    to {
+        filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.28));
+    }
+}
+
+.mood-echo {
+    position: relative;
+}
+
+.mood-echo::before {
+    content: "";
+    position: absolute;
+    inset: -4px -6px;
+    border-radius: 8px;
+    opacity: 0.12;
+    z-index: -1;
+}
+
+.mood-winter .mood-echo::before {
+    background: #e4f2ff;
+}
+
+.mood-spring .mood-echo::before {
+    background: #f5f9f2;
+}
+
+.mood-summer .mood-echo::before {
+    background: #fff4d9;
+}
+
+.mood-autumn .mood-echo::before {
+    background: #ffe9e0;
+}
+
+.mood-harvest .mood-echo::before {
+    background: #fff9f0;
+}
+
+/* ❄️ Winter — slow drift */
+.mood-winter {
+    animation: winterDrift 12s ease-in-out infinite alternate;
+}
+
+@keyframes winterDrift {
+    from {
+        filter: brightness(0.98);
+    }
+
+    to {
+        filter: brightness(1.05);
+    }
+}
+
+/* 🌱 Spring — soft bloom pulse */
+.mood-spring {
+    animation: springBloom 10s ease-in-out infinite alternate;
+}
+
+@keyframes springBloom {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.015);
+    }
+}
+
+/* ☀️ Summer — warm glow */
+.mood-summer {
+    animation: summerGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes summerGlow {
+    from {
+        filter: saturate(1);
+    }
+
+    to {
+        filter: saturate(1.15);
+    }
+}
+
+/* 🍂 Autumn — gentle fade */
+.mood-autumn {
+    animation: autumnFade 14s ease-in-out infinite alternate;
+}
+
+@keyframes autumnFade {
+    from {
+        opacity: 0.95;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* 🌾 Harvest — golden shimmer */
+.mood-harvest {
+    animation: harvestShimmer 9s ease-in-out infinite alternate;
+}
+
+@keyframes harvestShimmer {
+    from {
+        filter: drop-shadow(0 0 2px rgba(240, 200, 120, 0.25));
+    }
+
+    to {
+        filter: drop-shadow(0 0 6px rgba(240, 200, 120, 0.45));
+    }
+}
+
+:root {
+    --day-tint: rgba(255, 255, 255, 0.0);
+}
+
+body {
+    background: var(--day-tint);
+    transition: background 1.2s ease;
+}
+
+.weather-mood-nudge {
+    margin-top: 0.5rem;
+    font-size: 0.92rem;
+    font-style: italic;
+    opacity: 0.85;
+}
+
+.mood-weather-rain {
+    position: relative;
+    overflow: hidden;
+}
+
+.mood-weather-rain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: linear-gradient(120deg,
+            transparent 0%,
+            rgba(180, 208, 240, 0.18) 35%,
+            transparent 70%);
+    animation: rainShimmer 3.2s linear infinite;
+}
+
+@keyframes rainShimmer {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+.mood-weather-snow {
+    box-shadow: 0 0 22px rgba(220, 240, 255, 0.35);
+    animation: snowGlow 3.4s ease-in-out infinite alternate;
+}
+
+@keyframes snowGlow {
+    from {
+        filter: brightness(1) saturate(1);
+    }
+
+    to {
+        filter: brightness(1.08) saturate(1.08);
+    }
+}
