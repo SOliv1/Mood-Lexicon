@@ -21,10 +21,6 @@ const familyLinks = [
     label: "Daily Reflections",
     href: "https://soliv1.github.io/Daily-Reflections-App",
   },
-  {
-    label: "Cinematic Quotations",
-    href: "https://cinematic-quotations-evez.onrender.com",
-  }
 ];
 
 export default function Footer() {
