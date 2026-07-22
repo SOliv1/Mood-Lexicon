@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import './Quote.css';
 
 interface QuoteData {
   quote: string;
@@ -16,25 +17,13 @@ const moodToCategory: { [key: string]: string } = {
   'abundance': 'success',
 };
 
-// Fallback categories to cycle through
-const categories = ['inspirational', 'life', 'truth', 'success', 'faith', 'love', 'courage', 'happiness'];
-
 export default function Quote() {
   const [quote, setQuote] = useState<QuoteData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const currentMood = useSelector((state: RootState) => state.mood?.currentMood || '');
-  const [categoryIndex, setCategoryIndex] = useState(0);
 
-  useEffect(() => {
-    // Determine category based on mood, or cycle through categories
-    const category = moodToCategory[currentMood] || categories[categoryIndex % categories.length];
-    const apiKey = process.env.REACT_APP_QUOTES_API_KEY;
-
-    if (!apiKey) {
-      console.warn('REACT_APP_QUOTES_API_KEY is not set');
-      setQuote(null);
-      return;
-    }
-
+  const fetchQuote = (category: string, apiKey: string) => {
+    setIsLoading(true);
     fetch(`https://api.api-ninjas.com/v1/quotes?category=${category}`, {
       headers: {
         'X-Api-Key': apiKey
@@ -51,13 +40,34 @@ export default function Quote() {
       .catch(err => {
         console.error('Quote fetch error:', err);
         setQuote(null);
-      });
+      })
+      .finally(() => setIsLoading(false));
+  };
 
-    // Cycle category on reload
-    setCategoryIndex(prev => prev + 1);
-  }, [currentMood, categoryIndex]);
+  useEffect(() => {
+    // Determine category based on mood
+    const category = moodToCategory[currentMood] || 'inspirational';
+    const apiKey = process.env.REACT_APP_QUOTES_API_KEY;
 
-  if (!quote) {
+    if (!apiKey) {
+      console.warn('REACT_APP_QUOTES_API_KEY is not set');
+      setQuote(null);
+      return;
+    }
+
+    fetchQuote(category, apiKey);
+  }, [currentMood]);
+
+  const handleRefresh = () => {
+    const category = moodToCategory[currentMood] || 'inspirational';
+    const apiKey = process.env.REACT_APP_QUOTES_API_KEY;
+
+    if (apiKey) {
+      fetchQuote(category, apiKey);
+    }
+  };
+
+  if (!quote && !isLoading) {
     return (
       <div className="quote-error">
         Getting the quote failed. Check if REACT_APP_QUOTES_API_KEY is set.
@@ -67,8 +77,23 @@ export default function Quote() {
 
   return (
     <section className="quote">
-      <p>{quote.quote}</p>
-      <small>— {quote.author}</small>
+      {isLoading ? (
+        <p className="quote-loading">Loading...</p>
+      ) : (
+        <>
+          <p>{quote?.quote}</p>
+          <small>— {quote?.author}</small>
+        </>
+      )}
+      <button 
+        onClick={handleRefresh} 
+        disabled={isLoading}
+        className="quote-refresh-btn"
+        aria-label="Get a new quote"
+        title="Get a new quote"
+      >
+        {isLoading ? '⟳ Loading...' : '⟳ New Quote'}
+      </button>
     </section>
   );
 }
