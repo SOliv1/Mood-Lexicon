@@ -11,16 +11,20 @@ const familyLinks = [
   },
   {
     label: "Centre Notes",
-    href: "https://centre-thoughts.app",
+    href: "https://centre-notes.netlify.app",
   },
   {
     label: "Seasonal Mind Space",
-    href: "https://mindspace.app",
+    href: "https://soliv1.github.io/Seasonal-mind-space",
   },
   {
     label: "Daily Reflections",
-    href: "https://daily-reflections.app",
+    href: "https://soliv1.github.io/Daily-Reflections-App",
   },
+  {
+    label: "Cinematic Quotations",
+    href: "https://cinematic-quotations-evez.onrender.com",
+  }
 ];
 
 export default function Footer() {
