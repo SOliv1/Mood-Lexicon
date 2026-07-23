@@ -34,9 +34,20 @@ export const moodThemes: MoodTheme[] = [
     color: "#FFD97A",
     atmosphere: { season: "summer", time: "day", weather: "clear" },
     lexicon: {
-      synonyms: ["bright", "warm", "joyful", "glowing", "alive"],
-      antonyms: ["dim", "cold", "gloomy", "dull", "lifeless"],
-      tone: "uplifting, luminous, open"
+      synonyms: ["bright", "warm", "joyful", "glowing", "alive", "serendipitous", "luminous"],
+      antonyms: ["dim", "cold", "gloomy", "dull", "lifeless", "unfortunate", "unlucky"],
+      tone: "uplifting, serendipitous, luminous"
+    }
+  },
+  {
+    id: "ethereal",
+    name: "Ethereal",
+    color: "#EAF4FF",
+    atmosphere: { season: "winter", time: "night", weather: "clear" },
+    lexicon: {
+      synonyms: ["ephemeral", "ethereal", "delicate", "transient", "passing", "brief", "light", "airy", "otherworldly", "celestial", "subtle"],
+      antonyms: ["heavy", "grounded", "lasting", "enduring"],
+      tone: "light, airy, otherworldly"
     }
   },
   {
@@ -56,9 +67,9 @@ export const moodThemes: MoodTheme[] = [
     color: "#A2D9B2",
     atmosphere: { season: "spring", time: "morning", weather: "clear" },
     lexicon: {
-      synonyms: ["fresh", "hopeful", "awakening", "alive", "gentle"],
-      antonyms: ["stagnant", "wilted", "dormant", "cold", "barren"],
-      tone: "warm, tender, luminous"
+      synonyms: ["fresh", "hopeful", "awakening", "alive", "gentle", "majestic", "grand", "noble", "magnificent"],
+      antonyms: ["stagnant", "wilted", "dormant", "cold", "barren", "ordinary", "modest"],
+      tone: "warm, abundant, grand"
     }
   }
 ];

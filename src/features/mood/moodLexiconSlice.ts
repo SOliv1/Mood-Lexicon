@@ -8,6 +8,7 @@ import { moods } from '../../data/moods';
 const moodMap: Record<string, string> = {
   calm: 'calm',
   uplifted: 'uplifted',
+  ethereal: 'ethereal',
   peaceful: 'peaceful',
   energetic: 'energetic',
   abundance: 'abundance',

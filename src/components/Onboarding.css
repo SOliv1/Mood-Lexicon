@@ -1,0 +1,75 @@
+.onboarding-shell {
+    min-height: calc(100vh - 140px);
+    display: grid;
+    place-items: center;
+    padding: 1.2rem;
+}
+
+.onboarding-screen {
+    width: 100%;
+    background: linear-gradient(145deg, rgba(247, 243, 234, 0.9), rgba(226, 239, 252, 0.82));
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 1.2s ease forwards;
+}
+
+.onboarding-panel {
+    max-width: 34rem;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 16px 40px rgba(71, 95, 128, 0.16);
+    border: 1px solid rgba(122, 149, 184, 0.24);
+    animation: panelFade 1.4s ease forwards;
+}
+
+.onboarding-kicker {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: #4e6480;
+}
+
+.onboarding-panel h2 {
+    margin: 0.4rem 0 0.6rem;
+}
+
+.onboarding-panel p {
+    color: #3b4f69;
+    line-height: 1.5;
+}
+
+.onboarding-panel button {
+    border: 0;
+    margin-top: 0.6rem;
+    border-radius: 999px;
+    padding: 0.78rem 1.2rem;
+    font-weight: 700;
+    color: #2f3b55;
+    background: linear-gradient(135deg, rgba(207, 232, 243, 0.96), rgba(255, 225, 167, 0.9));
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes panelFade {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

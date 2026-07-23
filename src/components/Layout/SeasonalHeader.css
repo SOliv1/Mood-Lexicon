@@ -1,0 +1,70 @@
+.seasonal-header {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem clamp(1rem, 3vw, 2rem);
+    border-bottom: 1px solid rgba(85, 107, 137, 0.2);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+.seasonal-brand p {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.7rem;
+    color: #486179;
+    font-weight: 700;
+}
+
+.seasonal-brand h1 {
+    margin: 0.2rem 0 0;
+    font-size: 1.2rem;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.seasonal-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.seasonal-nav a {
+    text-decoration: none;
+    color: #2f3b55;
+    padding: 0.38rem 0.62rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+}
+
+.seasonal-nav a.active,
+.seasonal-nav a:hover,
+.seasonal-nav a:focus-visible {
+    background: rgba(255, 255, 255, 0.56);
+}
+
+.seasonal-header-winter {
+    background: linear-gradient(145deg, rgba(224, 239, 255, 0.86), rgba(236, 248, 255, 0.82));
+}
+
+.seasonal-header-spring {
+    background: linear-gradient(145deg, rgba(240, 252, 233, 0.9), rgba(255, 244, 205, 0.84));
+}
+
+.seasonal-header-summer {
+    background: linear-gradient(145deg, rgba(255, 242, 210, 0.9), rgba(255, 223, 165, 0.86));
+}
+
+.seasonal-header-autumn {
+    background: linear-gradient(145deg, rgba(255, 230, 214, 0.9), rgba(243, 205, 177, 0.84));
+}
+
+@media (max-width: 740px) {
+    .seasonal-header {
+        flex-direction: column;
+        align-items: start;
+    }
+}

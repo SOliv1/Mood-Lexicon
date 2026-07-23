@@ -1,0 +1,35 @@
+.mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 80;
+    display: none;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.25rem;
+    padding: 0.5rem;
+    background: rgba(247, 250, 255, 0.94);
+    border-top: 1px solid rgba(127, 148, 176, 0.24);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.mobile-bottom-nav a {
+    text-decoration: none;
+    color: #2f3b55;
+    font-size: 0.78rem;
+    text-align: center;
+    border-radius: 10px;
+    padding: 0.42rem 0.2rem;
+    font-weight: 700;
+}
+
+.mobile-bottom-nav a.active {
+    background: rgba(167, 198, 216, 0.34);
+}
+
+@media (max-width: 900px) {
+    .mobile-bottom-nav {
+        display: grid;
+    }
+}

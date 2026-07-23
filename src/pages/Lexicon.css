@@ -1,0 +1,33 @@
+.lexicon-page {
+    display: grid;
+    gap: 1rem;
+}
+
+.lexicon-page>* {
+    min-width: 0;
+}
+
+.lexicon-drawer-panel .lexicon-page {
+    padding-bottom: 0.5rem;
+}
+
+.lexicon-drawer-panel .lexicon-page>* {
+    animation: lexiconReveal 260ms ease-out both;
+}
+
+@keyframes lexiconReveal {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.lexicon-page {
+    display: grid;
+    gap: 1rem;
+}

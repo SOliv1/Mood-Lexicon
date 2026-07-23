@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 
-const uimoods = ['calm', 'uplifted', 'peaceful', 'energetic', 'abundance'];
+const uimoods = ['calm', 'uplifted', 'ethereal', 'peaceful', 'energetic', 'abundance'];
 
 
 const moodSlice = createSlice({

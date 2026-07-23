@@ -28,6 +28,7 @@ export function microNudge(mood: MoodEntry): string {
   const nudges: Record<string, string> = {
     calm: "Let’s soften the pace a little.",
     uplifted: "A small spark can lift the moment.",
+    ethereal: "Let the moment stay light and unforced.",
     peaceful: "Let’s bring things back into balance.",
     energetic: "Let’s build a little momentum.",
     abundance: "There is enough. You are supported."
@@ -147,6 +148,7 @@ export function moodEcho(mood: MoodEntry): string {
     calm: "Everything is allowed to slow down now.",
     peaceful: "The moment is settling into clarity.",
     uplifted: "A small spark is enough to begin again.",
+    ethereal: "Some moments are meant to stay tender.",
     energetic: "Movement returns in its own time.",
     abundance: "Fullness gathers quietly around you."
   };

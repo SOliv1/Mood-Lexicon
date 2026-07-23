@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+  <title id="title">Semantic compass</title>
+  <desc id="desc">A soft circular compass icon for the Mood Lexicon about page.</desc>
+  <defs>
+    <linearGradient id="compassRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7a93b8" />
+      <stop offset="100%" stop-color="#d8e6f4" />
+    </linearGradient>
+    <radialGradient id="compassGlow" cx="50%" cy="42%" r="68%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="65%" stop-color="#f3f7fb" stop-opacity="0.92" />
+      <stop offset="100%" stop-color="#dbe7f2" stop-opacity="0.98" />
+    </radialGradient>
+  </defs>
+  <circle cx="120" cy="120" r="110" fill="url(#compassGlow)" stroke="url(#compassRing)" stroke-width="10" />
+  <circle cx="120" cy="120" r="86" fill="none" stroke="#94aac8" stroke-width="2" stroke-dasharray="2 7" opacity="0.6" />
+  <circle cx="120" cy="120" r="10" fill="#6d84a6" />
+  <path d="M120 42 L136 120 L120 198 L104 120 Z" fill="#d86f64" opacity="0.95" />
+  <path d="M120 48 L133 120 L120 192 L107 120 Z" fill="#ffffff" opacity="0.95" />
+  <path d="M120 44 L128 120 L120 196 L112 120 Z" fill="#8fa7c8" opacity="0.9" />
+  <path d="M120 198 L132 120 L120 108 L108 120 Z" fill="#5e7394" opacity="0.9" />
+  <path d="M120 42 L132 120 L120 132 L108 120 Z" fill="#f3a97c" opacity="0.95" />
+  <g fill="#6d84a6" font-family="Georgia, serif" font-size="18" font-weight="700" text-anchor="middle">
+    <text x="120" y="34">N</text>
+    <text x="120" y="224">S</text>
+    <text x="28" y="126">W</text>
+    <text x="212" y="126">E</text>
+  </g>
+  <circle cx="120" cy="120" r="4" fill="#ffffff" />
+</svg>

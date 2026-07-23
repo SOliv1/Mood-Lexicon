@@ -1,0 +1,64 @@
+.lexicon-menu {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 60;
+}
+
+.menu-toggle {
+    background: rgba(248, 246, 243, 0.84);
+    border: 1px solid rgba(120, 140, 170, 0.3);
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    color: #2f3b55;
+    box-shadow: 0 10px 24px rgba(56, 75, 103, 0.14);
+    transition: background 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+
+.menu-panel {
+    margin-top: 0.5rem;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(130, 150, 180, 0.18);
+    border-radius: 14px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 220px;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+.menu-panel a {
+    color: #2f3b55;
+    text-decoration: none;
+    font-size: 0.94rem;
+    padding: 0.34rem 0.45rem;
+    border-radius: 8px;
+}
+
+.menu-panel a:hover,
+.menu-panel a:focus-visible,
+.menu-panel a.active {
+    background: rgba(167, 198, 216, 0.26);
+}
+
+.atmo-season-winter .menu-panel a:hover,
+.atmo-season-winter .menu-panel a:focus-visible,
+.atmo-season-winter .menu-panel a.active {
+    background: rgba(228, 242, 255, 0.9);
+}
+
+.atmo-season-summer .menu-panel a:hover,
+.atmo-season-summer .menu-panel a:focus-visible,
+.atmo-season-summer .menu-panel a.active {
+    background: rgba(255, 235, 186, 0.92);
+}
+
+@media (max-width: 900px) {
+    .lexicon-menu {
+        right: 0.8rem;
+        top: 0.8rem;
+    }
+}

@@ -55,9 +55,28 @@ export const moodThemes: MoodTheme[] = [
     },
     atmosphere: { season: "summer", time: "day", weather: "clear" },
     lexicon: {
-      synonyms: ["bright", "warm", "joyful", "glowing", "alive"],
-      antonyms: ["dim", "cold", "gloomy", "dull", "lifeless"],
-      tone: "uplifting, luminous, open"
+      synonyms: ["bright", "warm", "joyful", "glowing", "alive", "serendipitous", "luminous"],
+      antonyms: ["dim", "cold", "gloomy", "dull", "lifeless", "unfortunate", "unlucky"],
+      tone: "uplifting, serendipitous, luminous"
+    }
+  },
+  {
+    id: "ethereal",
+    name: "Ethereal",
+    color: "#EAF4FF",
+    gradient: {
+      from: "#F7FBFF",
+      to: "#DCEBFA"
+    },
+    motion: {
+      intensity: 0.12,
+      speed: 14
+    },
+    atmosphere: { season: "winter", time: "night", weather: "clear" },
+    lexicon: {
+      synonyms: ["ephemeral", "ethereal", "delicate", "transient", "passing", "brief", "light", "airy", "otherworldly", "celestial", "subtle"],
+      antonyms: ["heavy", "grounded", "lasting", "enduring"],
+      tone: "light, airy, otherworldly"
     }
   },
   {
@@ -112,9 +131,9 @@ export const moodThemes: MoodTheme[] = [
     },
     atmosphere: { season: "spring", time: "morning", weather: "clear" },
     lexicon: {
-      synonyms: ["fresh", "revitalized", "rejuvenated", "renewed", "invigorated"],
-      antonyms: ["stale", "worn", "tired", "exhausted", "depleted"],
-      tone: "refreshing, uplifting, lively"
+      synonyms: ["fresh", "revitalized", "rejuvenated", "renewed", "invigorated", "majestic", "grand", "noble", "magnificent"],
+      antonyms: ["stale", "worn", "tired", "exhausted", "depleted", "ordinary", "modest"],
+      tone: "refreshing, abundant, grand"
     }
   }
 

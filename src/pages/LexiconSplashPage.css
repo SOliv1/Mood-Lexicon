@@ -1,0 +1,79 @@
+.lexicon-splash {
+    min-height: calc(100vh - 90px);
+    padding: 1.2rem;
+    display: grid;
+    place-items: center;
+}
+
+.splash-panel {
+    width: min(620px, 100%);
+    border-radius: 24px;
+    padding: clamp(1.3rem, 3.5vw, 2.2rem);
+    border: 1px solid rgba(120, 140, 170, 0.2);
+    box-shadow: 0 22px 54px rgba(57, 81, 114, 0.18);
+    text-align: center;
+    background: rgba(255, 255, 255, 0.86);
+}
+
+.splash-kicker {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 800;
+    font-size: 0.72rem;
+    color: #4d627d;
+}
+
+.splash-panel h1 {
+    margin: 0.5rem 0 0.7rem;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-family: Georgia, "Times New Roman", serif;
+    color: #2f3b55;
+}
+
+.splash-panel p {
+    margin: 0;
+    color: #3d516a;
+    line-height: 1.55;
+}
+
+.splash-actions {
+    margin-top: 1.1rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+}
+
+.splash-button {
+    text-decoration: none;
+    padding: 0.78rem 1.06rem;
+    border-radius: 999px;
+    font-weight: 700;
+    color: #2f3b55;
+}
+
+.splash-primary {
+    background: linear-gradient(135deg, rgba(207, 232, 243, 0.95), rgba(255, 226, 159, 0.92));
+}
+
+.splash-secondary {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(120, 140, 170, 0.26);
+}
+
+.lexicon-splash-winter {
+    background: linear-gradient(150deg, rgba(230, 242, 255, 0.86), rgba(242, 249, 255, 0.82));
+}
+
+.lexicon-splash-spring {
+    background: linear-gradient(150deg, rgba(241, 252, 234, 0.86), rgba(255, 246, 209, 0.82));
+}
+
+.lexicon-splash-summer {
+    background: linear-gradient(150deg, rgba(255, 242, 214, 0.88), rgba(255, 226, 176, 0.82));
+}
+
+.lexicon-splash-autumn {
+    background: linear-gradient(150deg, rgba(255, 234, 217, 0.88), rgba(243, 204, 179, 0.82));
+}

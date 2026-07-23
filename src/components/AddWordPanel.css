@@ -1,0 +1,102 @@
+.add-word-panel {
+    display: grid;
+    gap: 1rem;
+    padding: 1.1rem;
+    border-radius: 20px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(244, 248, 255, 0.58));
+    border: 1px solid rgba(122, 149, 184, 0.24);
+    box-shadow: 0 18px 40px rgba(72, 97, 136, 0.12);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+}
+
+.add-word-form {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.add-word-copy {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.panel-eyebrow {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #566883;
+}
+
+.panel-description {
+    margin: 0;
+    color: #405168;
+    line-height: 1.5;
+}
+
+.add-word-field input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(104, 126, 163, 0.24);
+    border-radius: 14px;
+    padding: 0.95rem 1rem;
+    font-size: 1rem;
+    color: var(--mood-ink);
+    background: rgba(255, 255, 255, 0.88);
+    outline: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.add-word-field input:focus {
+    border-color: rgba(104, 126, 163, 0.62);
+    box-shadow: 0 0 0 4px rgba(151, 177, 221, 0.18);
+    transform: translateY(-1px);
+}
+
+.add-word-form button {
+    border: 0;
+    border-radius: 14px;
+    padding: 0.95rem 1.05rem;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--mood-primary) 72%, white), color-mix(in srgb, var(--mood-accent) 86%, white));
+    color: var(--mood-ink);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(88, 110, 147, 0.16);
+}
+
+.add-word-form button:disabled {
+    opacity: 0.72;
+    cursor: wait;
+}
+
+.add-word-status-row {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.status {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #314157;
+}
+
+.lookup-preview {
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    color: rgba(50, 66, 92, 0.8);
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

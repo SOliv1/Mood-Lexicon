@@ -63,6 +63,10 @@
     border-bottom-color: rgba(51, 65, 86, 0.55);
 }
 
+.footer-contact-link {
+    margin-left: 0.75rem;
+}
+
 .footer-links {
     margin: 0.72rem auto 0;
     max-width: 32rem;
@@ -92,6 +96,16 @@
     background: color-mix(in srgb, var(--footer-frost) 78%, transparent);
     color: var(--footer-ink);
     box-shadow: 0 4px 12px rgba(51, 65, 86, 0.08);
+}
+
+.atmo-season-winter .footer-links a:hover,
+.atmo-season-winter .footer-links a:focus-visible {
+    background: rgba(228, 242, 255, 0.92);
+}
+
+.atmo-season-summer .footer-links a:hover,
+.atmo-season-summer .footer-links a:focus-visible {
+    background: rgba(255, 235, 186, 0.92);
 }
 
 .footer-links a:focus-visible {

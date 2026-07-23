@@ -48,6 +48,12 @@ body {
   flex: 1 0 auto;
 }
 
+@media (max-width: 900px) {
+  .app-main {
+    padding-bottom: 4.2rem;
+  }
+}
+
 .global-atmosphere-canvas {
   position: fixed;
   inset: 0;

@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
+import LexiconMenu from './components/LexiconMenu';
+import MobileBottomNav from './components/Layout/MobileBottomNav';
+import Onboarding from './components/Onboarding';
+import SeasonalHeader from './components/Layout/SeasonalHeader';
 import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import LexiconSplashPage from './pages/LexiconSplashPage';
 import AtmosphereCanvas from './components/Atmosphere/AtmosphereCanvas';
 import './App.css';
 import { type TimeMode, type SeasonMode, type WeatherMode } from './theme/atmosphere';
@@ -61,6 +68,7 @@ function weatherLabelFromCode(code: number): string {
 }
 
 function App() {
+  const location = useLocation();
   const [timeMode, setTimeMode] = useState<TimeMode>('day');
   const [seasonMode, setSeasonMode] = useState<SeasonMode>(getSeasonFromDate(new Date()));
   const [weatherMode, setWeatherMode] = useState<WeatherMode>('clear');
@@ -180,6 +188,12 @@ function App() {
     };
   }, [timeMode, seasonMode, weatherMode]);
 
+  const isSplashRoute = location.pathname === '/splash';
+  const isOnboardingRoute = location.pathname === '/onboarding';
+  const isAboutRoute = location.pathname === '/about';
+  const showFooter = !isSplashRoute && !isOnboardingRoute;
+  const showMenu = !isOnboardingRoute;
+
   return (
     <div className="app-shell" id="home">
       <AtmosphereCanvas
@@ -187,25 +201,38 @@ function App() {
         seasonMode={seasonMode}
         weatherMode={weatherMode}
       />
-      <Header />
+      {isAboutRoute ? <SeasonalHeader /> : !isSplashRoute && <Header />}
+      {showMenu && <LexiconMenu />}
       <main className="app-main">
-        <HomePage
-          timeMode={timeMode}
-          seasonMode={seasonMode}
-          weatherMode={weatherMode}
-          temperature={temperature}
-          weatherLabel={weatherLabel}
-          currentTime={currentTime}
-          autoWeather={autoWeather}
-          weatherSource={weatherSource}
-          setAutoWeather={setAutoWeather}
-          setWeatherSource={setWeatherSource}
-          setTimeMode={setTimeMode}
-          setSeasonMode={setSeasonMode}
-          setWeatherMode={setWeatherMode}
-        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <HomePage
+                timeMode={timeMode}
+                seasonMode={seasonMode}
+                weatherMode={weatherMode}
+                temperature={temperature}
+                weatherLabel={weatherLabel}
+                currentTime={currentTime}
+                autoWeather={autoWeather}
+                weatherSource={weatherSource}
+                setAutoWeather={setAutoWeather}
+                setWeatherSource={setWeatherSource}
+                setTimeMode={setTimeMode}
+                setSeasonMode={setSeasonMode}
+                setWeatherMode={setWeatherMode}
+              />
+            }
+          />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/splash" element={<LexiconSplashPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
-      <Footer />
+      {showFooter && <Footer />}
+      <MobileBottomNav />
     </div>
   );
 }

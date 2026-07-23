@@ -3,7 +3,7 @@ import type { MoodEntry } from '../../types/mood';
 export const uplifted: MoodEntry = {
   id: 'uplifted',
   name: 'Uplifted',
-    synonyms: ['bright', 'buoyant', 'energised', 'lighthearted', 'hopeful'],
+    synonyms: ['bright', 'buoyant', 'energised', 'lighthearted', 'hopeful', 'serendipitous', 'luminous'],
     related: ['optimistic', 'joyful', 'encouraged', 'motivated'],
     antonyms: [
   'low',
@@ -20,6 +20,10 @@ export const uplifted: MoodEntry = {
   'empty',
   'unmotivated',
   'heavy',
+  'unfortunate',
+  'unlucky',
+  'dim',
+  'dull',
 ],
     behaviours: ['quicker steps', 'open gestures', 'warm tone', 'increased curiosity'],
     actions: ['send a kind message', 'play a favourite song', 'refresh your space', 'share a small win'],

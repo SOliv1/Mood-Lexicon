@@ -14,6 +14,7 @@ const moodToCategory: { [key: string]: string } = {
   'peaceful': 'peace',
   'energetic': 'success',
   'uplifted': 'happiness',
+  'ethereal': 'inspirational',
   'abundance': 'success',
 };
 

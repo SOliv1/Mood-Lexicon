@@ -25,6 +25,7 @@ const familyLinks = [
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const contactEmail = "s.olvier!@icloud.com";
 
   return (
     <footer className="reflections-footer">
@@ -35,10 +36,11 @@ export default function Footer() {
       </p>
       <p className="footer-meta">Mood Lexicon chapter · © {year} Reflections in Light</p>
       <a className="footer-home-link" href="#home">Return to Home</a>
+      <a className="footer-home-link footer-contact-link" href={`mailto:${contactEmail}`}>Contact</a>
 
       <nav className="footer-links" aria-label="Reflections in Light apps">
         {familyLinks.map((link) => (
-          <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
+          <a key={link.href} href={link.href} target="_blank" rel="noreferrer noopener">
             {link.label}
           </a>
         ))}
