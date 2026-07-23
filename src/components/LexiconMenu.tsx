@@ -12,12 +12,24 @@ export default function LexiconMenu() {
 
   return (
     <div className="lexicon-menu">
-      <button className="menu-toggle" onClick={() => setOpen((current) => !current)} aria-expanded={open} aria-label="Open navigation menu">
-        ☰
+      <button
+        type="button"
+        className="menu-toggle"
+        onClick={() => setOpen((current) => !current)}
+        aria-expanded={open}
+        aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+      >
+        {open ? "✕" : "☰"}
       </button>
 
       {open && (
         <div className="menu-panel" role="menu" aria-label="Mood Lexicon menu">
+          <div className="menu-panel-header">
+            <span className="menu-panel-title">Menu</span>
+            <button type="button" className="menu-close" onClick={closeMenu} aria-label="Close navigation menu">
+              ✕
+            </button>
+          </div>
           <NavLink to="/" onClick={closeMenu}>Home</NavLink>
           <NavLink to="/about" onClick={closeMenu}>About</NavLink>
           <NavLink to="/splash" onClick={closeMenu}>Splash</NavLink>
