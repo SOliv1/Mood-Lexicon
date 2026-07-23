@@ -1,8 +1,10 @@
 .lexicon-splash {
+    position: relative;
     min-height: calc(100vh - 90px);
     padding: 1.2rem;
     display: grid;
     place-items: center;
+    overflow: hidden;
 }
 
 .splash-panel {
@@ -12,7 +14,53 @@
     border: 1px solid rgba(120, 140, 170, 0.2);
     box-shadow: 0 22px 54px rgba(57, 81, 114, 0.18);
     text-align: center;
-    background: rgba(255, 255, 255, 0.86);
+    background: rgba(255, 255, 255, 0.68);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    transition: opacity 500ms ease, transform 500ms ease, background 500ms ease;
+}
+
+.splash-panel-breathing {
+    animation: splashPanelMeditativeFade 12s ease-in-out infinite;
+}
+
+.splash-panel.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.96);
+    pointer-events: none;
+    background: rgba(255, 255, 255, 0);
+    box-shadow: none;
+    border-color: rgba(120, 140, 170, 0);
+}
+
+.splash-mode-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2;
+    border: 1px solid rgba(150, 176, 208, 0.28);
+    border-radius: 999px;
+    padding: 0.72rem 1rem;
+    background: rgba(255, 255, 255, 0.52);
+    color: #2f3b55;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 28px rgba(36, 52, 81, 0.12);
+    transition: opacity 260ms ease, transform 260ms ease, background 260ms ease, box-shadow 260ms ease;
+}
+
+.splash-mode-toggle.is-return-pill {
+    top: auto;
+    right: 1rem;
+    bottom: 1rem;
+    padding: 0.58rem 0.86rem;
+    font-size: 0.88rem;
+    background: rgba(255, 255, 255, 0.34);
+    box-shadow: 0 8px 20px rgba(36, 52, 81, 0.1);
 }
 
 .splash-kicker {
@@ -33,6 +81,77 @@
 
 .splash-panel p {
     margin: 0;
+    color: #3d516a;
+    line-height: 1.55;
+}
+
+.splash-meditation-line {
+    margin-top: 0.8rem;
+    font-size: 0.98rem;
+    color: rgba(42, 59, 86, 0.9);
+}
+
+.splash-reflection-field {
+    margin-top: 0.95rem;
+    display: grid;
+    gap: 0.45rem;
+    text-align: left;
+}
+
+.splash-reflection-help {
+    font-size: 0.92rem;
+    color: rgba(54, 74, 105, 0.84);
+}
+
+.splash-reflection-field label {
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 800;
+    color: rgba(53, 74, 107, 0.82);
+}
+
+.splash-reflection-field textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 84px;
+    border-radius: 12px;
+    border: 1px solid rgba(120, 140, 170, 0.28);
+    background: rgba(255, 255, 255, 0.74);
+    padding: 0.68rem 0.78rem;
+    color: #2f3b55;
+    font: inherit;
+    line-height: 1.45;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+.splash-reflection-field textarea::placeholder {
+    color: rgba(78, 96, 127, 0.62);
+}
+
+.splash-reflection-field textarea:focus-visible {
+    outline: 2px solid rgba(118, 150, 201, 0.62);
+    outline-offset: 2px;
+}
+
+.splash-steps {
+    margin-top: 1.1rem;
+    padding: 0.95rem 1rem;
+    border-radius: 16px;
+    background: rgba(250, 252, 255, 0.52);
+    text-align: left;
+}
+
+.splash-steps h2 {
+    margin: 0 0 0.55rem;
+    font-size: 0.98rem;
+    color: #334661;
+}
+
+.splash-steps ol {
+    margin: 0;
+    padding-left: 1.2rem;
     color: #3d516a;
     line-height: 1.55;
 }
@@ -63,17 +182,64 @@
 }
 
 .lexicon-splash-winter {
-    background: linear-gradient(150deg, rgba(230, 242, 255, 0.86), rgba(242, 249, 255, 0.82));
+    background: linear-gradient(150deg, rgba(230, 242, 255, 0.22), rgba(242, 249, 255, 0.14));
 }
 
 .lexicon-splash-spring {
-    background: linear-gradient(150deg, rgba(241, 252, 234, 0.86), rgba(255, 246, 209, 0.82));
+    background: linear-gradient(150deg, rgba(241, 252, 234, 0.18), rgba(255, 246, 209, 0.12));
 }
 
 .lexicon-splash-summer {
-    background: linear-gradient(150deg, rgba(255, 242, 214, 0.88), rgba(255, 226, 176, 0.82));
+    background: linear-gradient(150deg, rgba(255, 242, 214, 0.2), rgba(255, 226, 176, 0.12));
 }
 
 .lexicon-splash-autumn {
-    background: linear-gradient(150deg, rgba(255, 234, 217, 0.88), rgba(243, 204, 179, 0.82));
+    background: linear-gradient(150deg, rgba(255, 234, 217, 0.18), rgba(243, 204, 179, 0.12));
+}
+
+@keyframes splashPanelMeditativeFade {
+
+    0%,
+    100% {
+        opacity: 0.9;
+        transform: translateY(0);
+    }
+
+    45% {
+        opacity: 0.44;
+        transform: translateY(2px);
+    }
+
+    62% {
+        opacity: 0.58;
+        transform: translateY(1px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .splash-panel-breathing {
+        animation: none;
+    }
+}
+
+@media (max-width: 720px) {
+    .splash-mode-toggle {
+        top: 0.85rem;
+        right: 0.85rem;
+        padding: 0.62rem 0.86rem;
+        font-size: 0.92rem;
+    }
+
+    .splash-mode-toggle.is-return-pill {
+        top: auto;
+        right: 0.85rem;
+        bottom: 0.85rem;
+        padding: 0.54rem 0.76rem;
+        font-size: 0.84rem;
+    }
+
+    .lexicon-splash {
+        align-items: start;
+        padding-top: 4.8rem;
+    }
 }

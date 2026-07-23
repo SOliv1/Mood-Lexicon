@@ -6,8 +6,7 @@ export default function MobileBottomNav() {
     <nav className="mobile-bottom-nav" aria-label="Mobile navigation">
       <NavLink to="/">Home</NavLink>
       <NavLink to="/about">About</NavLink>
-      <NavLink to="/splash">Splash</NavLink>
-      <NavLink to="/onboarding">Onboard</NavLink>
+      <NavLink to="/splash">Arrival Ritual</NavLink>
     </nav>
   );
 }

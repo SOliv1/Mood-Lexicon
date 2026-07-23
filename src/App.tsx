@@ -4,7 +4,6 @@ import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 import LexiconMenu from './components/LexiconMenu';
 import MobileBottomNav from './components/Layout/MobileBottomNav';
-import Onboarding from './components/Onboarding';
 import SeasonalHeader from './components/Layout/SeasonalHeader';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -15,6 +14,7 @@ import { type TimeMode, type SeasonMode, type WeatherMode } from './theme/atmosp
 
 const LATITUDE = 52.06;
 const LONGITUDE = -1.98;
+const ARRIVAL_RITUAL_KEY = 'lexicon-onboarded';
 
 const timeClasses = ['atmo-time-day', 'atmo-time-night'];
 const seasonClasses = ['atmo-season-summer', 'atmo-season-winter'];
@@ -69,6 +69,7 @@ function weatherLabelFromCode(code: number): string {
 
 function App() {
   const location = useLocation();
+  const [hasCompletedArrival, setHasCompletedArrival] = useState<boolean | null>(null);
   const [timeMode, setTimeMode] = useState<TimeMode>('day');
   const [seasonMode, setSeasonMode] = useState<SeasonMode>(getSeasonFromDate(new Date()));
   const [weatherMode, setWeatherMode] = useState<WeatherMode>('clear');
@@ -79,6 +80,14 @@ function App() {
   const [currentTime, setCurrentTime] = useState(() => ukTimeFormatter.format(new Date()));
 
   // Real season from current month.
+  useEffect(() => {
+    try {
+      setHasCompletedArrival(window.localStorage.getItem(ARRIVAL_RITUAL_KEY) === 'true');
+    } catch {
+      setHasCompletedArrival(false);
+    }
+  }, []);
+
   useEffect(() => {
     const updateSeason = () => setSeasonMode(getSeasonFromDate(new Date()));
     updateSeason();
@@ -189,10 +198,9 @@ function App() {
   }, [timeMode, seasonMode, weatherMode]);
 
   const isSplashRoute = location.pathname === '/splash';
-  const isOnboardingRoute = location.pathname === '/onboarding';
   const isAboutRoute = location.pathname === '/about';
-  const showFooter = !isSplashRoute && !isOnboardingRoute;
-  const showMenu = !isOnboardingRoute && !isSplashRoute;
+  const showFooter = !isSplashRoute;
+  const showMenu = !isSplashRoute;
 
   return (
     <div className="app-shell" id="home">
@@ -207,7 +215,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={
+            element={hasCompletedArrival === null ? null : hasCompletedArrival ? (
               <HomePage
                 timeMode={timeMode}
                 seasonMode={seasonMode}
@@ -223,10 +231,10 @@ function App() {
                 setSeasonMode={setSeasonMode}
                 setWeatherMode={setWeatherMode}
               />
-            }
+            ) : <Navigate to="/splash" replace />}
           />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/onboarding" element={<Navigate to="/splash" replace />} />
           <Route path="/splash" element={<LexiconSplashPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

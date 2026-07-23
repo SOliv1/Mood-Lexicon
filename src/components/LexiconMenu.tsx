@@ -32,8 +32,7 @@ export default function LexiconMenu() {
           </div>
           <NavLink to="/" onClick={closeMenu}>Home</NavLink>
           <NavLink to="/about" onClick={closeMenu}>About</NavLink>
-          <NavLink to="/splash" onClick={closeMenu}>Splash</NavLink>
-          <NavLink to="/onboarding" onClick={closeMenu}>Onboarding</NavLink>
+          <NavLink to="/splash" onClick={closeMenu}>Arrival Ritual</NavLink>
           <Link to={{ pathname: "/", hash: "#light-ritual" }} onClick={closeMenu}>Light Ritual</Link>
           <Link to={{ pathname: "/", hash: "#atmosphere" }} onClick={closeMenu}>Atmosphere</Link>
           <Link to={{ pathname: "/", hash: "#atmosphere-modes" }} onClick={closeMenu}>Season & Weather</Link>

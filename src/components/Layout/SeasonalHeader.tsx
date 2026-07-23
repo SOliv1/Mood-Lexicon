@@ -31,7 +31,7 @@ export default function SeasonalHeader() {
       <nav className="seasonal-nav" aria-label="Primary">
         <NavLink to="/">Home</NavLink>
         <NavLink to="/about">About</NavLink>
-        <NavLink to="/splash">Splash</NavLink>
+        <NavLink to="/splash">Arrival Ritual</NavLink>
       </nav>
     </header>
   );
