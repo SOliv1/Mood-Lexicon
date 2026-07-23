@@ -192,7 +192,7 @@ function App() {
   const isOnboardingRoute = location.pathname === '/onboarding';
   const isAboutRoute = location.pathname === '/about';
   const showFooter = !isSplashRoute && !isOnboardingRoute;
-  const showMenu = !isOnboardingRoute;
+  const showMenu = !isOnboardingRoute && !isSplashRoute;
 
   return (
     <div className="app-shell" id="home">

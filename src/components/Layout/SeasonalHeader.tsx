@@ -15,8 +15,17 @@ export default function SeasonalHeader() {
   return (
     <header className={`seasonal-header seasonal-header-${season}`}>
       <div className="seasonal-brand">
-        <p>{seasonLabels[season] ?? "Seasonal Studio"}</p>
-        <h1>Mood Lexicon</h1>
+        <NavLink to="/" className="seasonal-logo-link" aria-label="Go to home page">
+          <img
+            className="seasonal-logo"
+            src="/logos/icon-96.png"
+            alt="Mood Lexicon logo"
+          />
+        </NavLink>
+        <div className="seasonal-brand-copy">
+          <p>{seasonLabels[season] ?? "Seasonal Studio"}</p>
+          <h1>Mood Lexicon</h1>
+        </div>
       </div>
 
       <nav className="seasonal-nav" aria-label="Primary">

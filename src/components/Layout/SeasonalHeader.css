@@ -11,6 +11,49 @@
     backdrop-filter: blur(12px);
 }
 
+.seasonal-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.seasonal-logo-link {
+    display: inline-flex;
+    border-radius: 12px;
+    text-decoration: none;
+}
+
+.seasonal-logo-link:focus-visible {
+    outline: 2px solid rgba(84, 118, 160, 0.65);
+    outline-offset: 3px;
+}
+
+.seasonal-logo {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(47, 59, 85, 0.16);
+    transform-origin: center;
+    transition: transform 180ms ease, box-shadow 300ms ease, filter 280ms ease;
+}
+
+.seasonal-logo-link:hover .seasonal-logo,
+.seasonal-logo-link:focus-visible .seasonal-logo {
+    animation: seasonalLogoBreathe 1.2s ease-in-out infinite;
+    box-shadow: 0 10px 24px rgba(47, 59, 85, 0.22);
+}
+
+.seasonal-logo-link:active .seasonal-logo {
+    animation: none;
+    transform: scale(0.94);
+    filter: brightness(1.08);
+}
+
+.seasonal-brand-copy {
+    display: grid;
+    gap: 0.1rem;
+}
+
 .seasonal-brand p {
     margin: 0;
     text-transform: uppercase;
@@ -66,5 +109,26 @@
     .seasonal-header {
         flex-direction: column;
         align-items: start;
+    }
+
+    .seasonal-brand {
+        align-items: flex-start;
+    }
+}
+
+@keyframes seasonalLogoBreathe {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+        filter: brightness(1.08);
+    }
+
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
     }
 }
