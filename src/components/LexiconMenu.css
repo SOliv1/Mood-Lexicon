@@ -22,20 +22,64 @@
     position: absolute;
     top: calc(100% + 0.65rem);
     right: 0;
-    background: rgba(255, 255, 255, 0.94);
+    background: rgba(255, 255, 255, 0.64);
     border: 1px solid rgba(130, 150, 180, 0.18);
     border-radius: 14px;
-    padding: 0.8rem;
+    padding: 0.66rem 0.58rem calc(0.72rem + env(safe-area-inset-bottom, 0px));
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.36rem;
     min-width: 220px;
     max-width: min(320px, calc(100vw - 1.6rem));
-    max-height: calc(100vh - 5rem);
+    max-height: min(78vh, calc(100dvh - 4.6rem));
     overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 0 18px 40px rgba(56, 75, 103, 0.16);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+}
+
+.menu-scroll-fade {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.42rem;
+    min-height: 0;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0.1rem 0.18rem 0.16rem 0;
+    margin-right: -0.18rem;
+}
+
+.menu-scroll-fade::before,
+.menu-scroll-fade::after {
+    content: "";
+    position: sticky;
+    left: 0;
+    right: 0;
+    height: 0.72rem;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.menu-scroll-fade::before {
+    top: 0;
+    margin-bottom: -0.72rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0));
+}
+
+.menu-scroll-fade::after {
+    bottom: 0;
+    margin-top: -0.72rem;
+    background: linear-gradient(0deg, rgba(246, 249, 252, 0.8), rgba(246, 249, 252, 0));
+}
+
+.menu-scroll-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.42rem;
+    padding-bottom: 0.08rem;
 }
 
 .menu-panel-header {
@@ -43,8 +87,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
-    padding-bottom: 0.35rem;
-    margin-bottom: 0.15rem;
+    padding-bottom: 0.28rem;
+    margin-bottom: 0.08rem;
     border-bottom: 1px solid rgba(130, 150, 180, 0.14);
 }
 
@@ -74,8 +118,9 @@
 .menu-panel a {
     color: #2f3b55;
     text-decoration: none;
-    font-size: 0.94rem;
-    padding: 0.34rem 0.45rem;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    padding: 0.42rem 0.48rem;
     border-radius: 8px;
 }
 
@@ -97,6 +142,75 @@
     background: rgba(255, 235, 186, 0.92);
 }
 
+.menu-external-boundary {
+    height: 1px;
+    margin: 0.22rem 0 0.14rem;
+    background: linear-gradient(90deg, rgba(109, 127, 156, 0), rgba(109, 127, 156, 0.55), rgba(109, 127, 156, 0));
+}
+
+.menu-external-title {
+    margin: 0;
+    padding: 0.08rem 0.08rem 0.02rem;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(54, 70, 95, 0.74);
+}
+
+.menu-external-link {
+    border: 1px solid transparent;
+    font-weight: 700;
+    position: relative;
+}
+
+.menu-external-link::after {
+    content: "↗";
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.78rem;
+    opacity: 0.72;
+}
+
+.menu-site-moodsboard {
+    background: rgba(138, 186, 245, 0.16);
+    border-color: rgba(95, 152, 226, 0.32);
+}
+
+.menu-site-constellations {
+    background: rgba(177, 160, 235, 0.16);
+    border-color: rgba(143, 121, 214, 0.34);
+}
+
+.menu-site-seasonal-studio {
+    background: rgba(147, 210, 166, 0.16);
+    border-color: rgba(108, 183, 130, 0.36);
+}
+
+.menu-site-centre-notes {
+    background: rgba(255, 203, 148, 0.16);
+    border-color: rgba(229, 162, 83, 0.36);
+}
+
+.menu-site-mindspace {
+    background: rgba(169, 225, 221, 0.16);
+    border-color: rgba(112, 191, 186, 0.38);
+}
+
+.menu-site-daily-reflections {
+    background: rgba(255, 174, 194, 0.16);
+    border-color: rgba(224, 124, 156, 0.36);
+}
+
+.menu-panel a.menu-external-link:hover,
+.menu-panel a.menu-external-link:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(55, 78, 112, 0.12);
+    background: color-mix(in srgb, currentColor 12%, white);
+}
+
 @media (max-width: 900px) {
     .lexicon-menu {
         right: 0.8rem;
@@ -105,10 +219,22 @@
 
     .menu-panel {
         min-width: min(260px, calc(100vw - 1.6rem));
-        padding: 0.7rem;
+        max-height: min(72vh, calc(100dvh - 4.4rem));
+        padding: 0.62rem 0.52rem calc(0.68rem + env(safe-area-inset-bottom, 0px));
+    }
+
+    .menu-scroll-fade {
+        gap: 0.38rem;
+        padding-right: 0.1rem;
+        margin-right: -0.1rem;
+    }
+
+    .menu-scroll-fade::before,
+    .menu-scroll-fade::after {
+        height: 0.64rem;
     }
 
     .menu-panel a {
-        padding: 0.55rem 0.6rem;
+        padding: 0.42rem 0.46rem;
     }
 }

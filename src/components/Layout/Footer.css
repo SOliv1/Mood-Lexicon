@@ -46,9 +46,21 @@
     opacity: 0.72;
 }
 
+.footer-utility-links {
+    margin-top: 0.7rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.55rem 0.9rem;
+}
+
 .footer-home-link {
-    display: inline-block;
-    margin-top: 0.48rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 1.8rem;
+    padding: 0.08rem 0;
     color: var(--footer-ink-soft);
     font-size: 0.76rem;
     font-weight: 600;
@@ -61,10 +73,6 @@
 .footer-home-link:focus-visible {
     color: var(--footer-ink);
     border-bottom-color: rgba(51, 65, 86, 0.55);
-}
-
-.footer-contact-link {
-    margin-left: 0.75rem;
 }
 
 .footer-links {

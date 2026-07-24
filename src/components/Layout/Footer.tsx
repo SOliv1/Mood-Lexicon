@@ -28,15 +28,19 @@ export default function Footer() {
   const contactEmail = "s.olvier!@icloud.com";
 
   return (
-    <footer className="reflections-footer">
+    <footer className="reflections-footer" id="site-footer">
       <p className="footer-kicker">Reflections in Light Family</p>
       <p className="footer-signature">
         You&rsquo;re in the <strong>Reflections in Light</strong> family, a
         sanctuary for thought, rhythm, and renewal.
       </p>
       <p className="footer-meta">Mood Lexicon chapter · © {year} Reflections in Light</p>
-      <a className="footer-home-link" href="#home">Return to Home</a>
-      <a className="footer-home-link footer-contact-link" href={`mailto:${contactEmail}`}>Contact</a>
+
+      <div className="footer-utility-links">
+        <a className="footer-home-link" href="#home">Return to Home</a>
+        <a className="footer-home-link" href="/#grounding-compass">Grounding Compass</a>
+        <a className="footer-home-link" href={`mailto:${contactEmail}`}>Contact</a>
+      </div>
 
       <nav className="footer-links" aria-label="Reflections in Light apps">
         {familyLinks.map((link) => (

@@ -154,7 +154,7 @@ export default function HomePage({
           </div>
         </div>
 
-        <section className="homepage-grounding-zone" aria-label="Grounding compass">
+        <section id="grounding-compass" className="homepage-grounding-zone" aria-label="Grounding Compass">
           <GroundingCompass />
         </section>
       </section>

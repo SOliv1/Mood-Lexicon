@@ -158,6 +158,33 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (!location.hash) {
+      return;
+    }
+
+    const targetId = decodeURIComponent(location.hash.slice(1));
+    if (!targetId) {
+      return;
+    }
+
+    const scrollToTarget = () => {
+      const target = document.getElementById(targetId);
+      if (target) {
+        const offset = targetId === 'site-footer' ? 96 : 24;
+        const targetTop = target.getBoundingClientRect().top + window.scrollY - offset;
+        const maxScrollTop = document.documentElement.scrollHeight - window.innerHeight;
+        window.scrollTo({
+          top: Math.max(0, Math.min(targetTop, maxScrollTop)),
+          behavior: 'smooth',
+        });
+      }
+    };
+
+    const frame = window.requestAnimationFrame(scrollToTarget);
+    return () => window.cancelAnimationFrame(frame);
+  }, [location.hash, location.pathname, hasCompletedArrival]);
+
+  useEffect(() => {
     const updateSeason = () => setSeasonMode(getSeasonFromDate(new Date()));
     updateSeason();
     const id = window.setInterval(updateSeason, 6 * 60 * 60 * 1000);
