@@ -18,21 +18,6 @@ const release = [
   "Everything at once",
 ];
 
-const highlights = [
-  {
-    title: "Easy to settle into",
-    detail: "Two circles of attention for fast emotional grounding.",
-  },
-  {
-    title: "Clear at a glance",
-    detail: "Warm/cool contrast helps you see where your energy belongs.",
-  },
-  {
-    title: "Quietly ritual-like",
-    detail: "Works alongside Light Ritual without taking it over.",
-  },
-];
-
 export default function GroundingCompass() {
   const [selectedCanInfluence, setSelectedCanInfluence] = useState<string[]>([]);
   const [selectedRelease, setSelectedRelease] = useState<string[]>([]);
@@ -43,6 +28,13 @@ export default function GroundingCompass() {
   const balance = influenceStrength - releaseStrength;
   const balancePosition = ((balance + 1) / 2) * 100;
   const isBalanced = Math.abs(balance) < 0.2;
+  const neededInfluenceToRebalance = Math.max(0, Math.ceil((releaseStrength - influenceStrength) * canInfluence.length));
+  const releaseSuppression = Math.max(0, balance);
+  const influenceSuppression = Math.max(0, -balance);
+  const pressurePercent = Math.round(releaseStrength * 100);
+  const neutralizationPercent = releaseStrength === 0
+    ? (influenceStrength > 0 ? 100 : 0)
+    : Math.min(100, Math.round((influenceStrength / releaseStrength) * 100));
 
   const stateClass = balance > 0.2
     ? "is-influence-leading"
@@ -53,6 +45,8 @@ export default function GroundingCompass() {
   const wheelStyle = {
     "--influence-strength": influenceStrength.toFixed(3),
     "--release-strength": releaseStrength.toFixed(3),
+    "--release-suppression": releaseSuppression.toFixed(3),
+    "--influence-suppression": influenceSuppression.toFixed(3),
     "--balance-position": `${balancePosition.toFixed(1)}%`,
   } as CSSProperties;
 
@@ -119,6 +113,15 @@ export default function GroundingCompass() {
         </p>
 
         <p className="grounding-compass-instructions">{guidanceLine}</p>
+        <p className="grounding-rebalance-tip">
+          {totalSelected === 0
+            ? "Start with one release pressure, then match it with one influence focus."
+            : balance < -0.2
+              ? `Rebalance target: choose ${neededInfluenceToRebalance} more ${neededInfluenceToRebalance === 1 ? "influence" : "influences"} to neutralize stress pressure.`
+              : balance > 0.2
+                ? `Neutralization strength: ${neutralizationPercent}% against current release load.`
+                : `Balanced field: ${pressurePercent}% release pressure held by equal influence.`}
+        </p>
         <button
           type="button"
           className="grounding-reset-button"
@@ -147,7 +150,7 @@ export default function GroundingCompass() {
                 <li key={item}>
                   <button
                     type="button"
-                    className={`grounding-item-button ${selectedCanInfluence.includes(item) ? "is-selected" : ""}`}
+                    className={`grounding-item-button is-influence-item ${selectedCanInfluence.includes(item) ? "is-selected" : ""}`}
                     onClick={() => toggleSelected(item, selectedCanInfluence, setSelectedCanInfluence)}
                   >
                     {item}
@@ -164,7 +167,7 @@ export default function GroundingCompass() {
                 <li key={item}>
                   <button
                     type="button"
-                    className={`grounding-item-button ${selectedRelease.includes(item) ? "is-selected" : ""}`}
+                    className={`grounding-item-button is-release-item ${selectedRelease.includes(item) ? "is-selected" : ""}`}
                     onClick={() => toggleSelected(item, selectedRelease, setSelectedRelease)}
                   >
                     {item}
@@ -174,15 +177,6 @@ export default function GroundingCompass() {
             </ul>
           </article>
         </div>
-      </div>
-
-      <div className="grounding-highlights">
-        {highlights.map((highlight) => (
-          <article key={highlight.title} className="grounding-highlight-card">
-            <h4>{highlight.title}</h4>
-            <p>{highlight.detail}</p>
-          </article>
-        ))}
       </div>
     </section>
   );
