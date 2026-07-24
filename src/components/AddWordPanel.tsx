@@ -18,6 +18,15 @@ type AddWordPanelProps = {
   onWordAdded: (entry: UserWordEntry) => void;
 };
 
+const MAX_WORDS_PER_SUBMIT = 8;
+
+function splitWords(input: string): string[] {
+  return input
+    .split(/[\n,]/g)
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
 async function fetchWordLookup(word: string): Promise<WordLookupResult> {
   const normalized = encodeURIComponent(word.trim().toLowerCase());
   const [synonymsResponse, antonymsResponse] = await Promise.all([
@@ -43,12 +52,20 @@ export default function AddWordPanel({ onWordAdded }: AddWordPanelProps) {
   const [lookup, setLookup] = useState<WordLookupResult | null>(null);
   const [isLookingUp, setIsLookingUp] = useState(false);
 
-  const canLookup = useMemo(() => word.trim().length > 1, [word]);
+  const wordsToAdd = useMemo(() => splitWords(word), [word]);
+  const wordCount = wordsToAdd.length;
+  const isOverLimit = wordCount > MAX_WORDS_PER_SUBMIT;
+  const canLookup = useMemo(
+    () => wordsToAdd.length === 1 && wordsToAdd[0].trim().length > 1,
+    [wordsToAdd]
+  );
 
   useEffect(() => {
     if (!canLookup) {
       setLookup(null);
-      setStatus("Type a word to grow the lexicon.");
+      if (!wordCount) {
+        setStatus("Type a word to grow the lexicon.");
+      }
       return;
     }
 
@@ -56,7 +73,7 @@ export default function AddWordPanel({ onWordAdded }: AddWordPanelProps) {
     const timeoutId = window.setTimeout(async () => {
       setIsLookingUp(true);
       try {
-        const result = await fetchWordLookup(word);
+        const result = await fetchWordLookup(wordsToAdd[0]);
         if (!controller.signal.aborted) {
           setLookup(result);
           setStatus("Live lookup ready.");
@@ -77,39 +94,66 @@ export default function AddWordPanel({ onWordAdded }: AddWordPanelProps) {
       controller.abort();
       window.clearTimeout(timeoutId);
     };
-  }, [word, canLookup]);
+  }, [canLookup, wordCount, wordsToAdd]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const trimmed = word.trim();
-    if (!trimmed) {
-      setStatus("Add a word first.");
+    if (!wordCount) {
+      setStatus("Add at least one word first.");
       return;
     }
 
-    setStatus("Classifying your word…");
+    if (isOverLimit) {
+      setStatus(`Add up to ${MAX_WORDS_PER_SUBMIT} words at once.`);
+      return;
+    }
 
-    try {
-      const result = lookup?.word.toLowerCase() === trimmed.toLowerCase()
-        ? lookup
-        : await fetchWordLookup(trimmed);
+    setStatus(`Classifying ${wordCount} ${wordCount === 1 ? "word" : "words"}…`);
 
-      const classification = classifyWord(trimmed, result);
+    let addedCount = 0;
+    let upgradedCount = 0;
 
-      onWordAdded({
-        ...result,
-        category: classification.category,
-        matchedMood: classification.matchedMood,
-        tone: classification.tone
-      });
+    for (const rawWord of wordsToAdd) {
+      const trimmed = rawWord.trim();
+      if (!trimmed) {
+        continue;
+      }
 
-      setStatus(`Added to ${classification.category} (${classification.tone}).`);
+      try {
+        const result =
+          lookup?.word.toLowerCase() === trimmed.toLowerCase() && wordsToAdd.length === 1
+            ? lookup
+            : await fetchWordLookup(trimmed);
+
+        const classification = classifyWord(trimmed, result);
+
+        onWordAdded({
+          ...result,
+          category: classification.category,
+          matchedMood: classification.matchedMood,
+          tone: classification.tone
+        });
+
+        addedCount += 1;
+        if (classification.category !== "uncategorised") {
+          upgradedCount += 1;
+        }
+      } catch {
+        // Skip failed lookups and continue with the rest.
+      }
+    }
+
+    if (addedCount > 0) {
+      setStatus(
+        `Added ${addedCount} ${addedCount === 1 ? "word" : "words"}. ${upgradedCount} categorised.`
+      );
       setWord("");
       setLookup(null);
-    } catch {
-      setStatus("Could not classify word right now.");
+      return;
     }
+
+    setStatus("Could not classify words right now.");
   }
 
   return (
@@ -119,7 +163,7 @@ export default function AddWordPanel({ onWordAdded }: AddWordPanelProps) {
           <p className="panel-eyebrow">Living lexicon</p>
           <h3>Grow the mood map</h3>
           <p className="panel-description">
-            Type a word, let the thesaurus respond, and place it into the closest mood.
+            Type up to {MAX_WORDS_PER_SUBMIT} words at once (comma-separated), let the thesaurus respond, and place them into the closest moods.
           </p>
         </div>
 
@@ -128,14 +172,21 @@ export default function AddWordPanel({ onWordAdded }: AddWordPanelProps) {
           <input
             type="text"
             value={word}
-            placeholder="Add your own word…"
+            placeholder="calm, moonlit, grounded..."
             onChange={(event) => setWord(event.target.value)}
             autoComplete="off"
           />
         </label>
 
-        <button type="submit" disabled={isLookingUp && !lookup}>
-          {isLookingUp ? "Looking up…" : "Add Word"}
+        <div className="add-word-helper-row" aria-live="polite">
+          <span>Up to {MAX_WORDS_PER_SUBMIT} words each time.</span>
+          <span className={`add-word-count ${isOverLimit ? "is-over-limit" : ""}`}>
+            {wordCount}/{MAX_WORDS_PER_SUBMIT}
+          </span>
+        </div>
+
+        <button type="submit" disabled={(isLookingUp && !lookup) || isOverLimit}>
+          {isLookingUp ? "Looking up…" : "Add Words"}
         </button>
       </form>
 

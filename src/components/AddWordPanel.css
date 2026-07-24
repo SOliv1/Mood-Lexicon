@@ -15,6 +15,26 @@
     gap: 0.9rem;
 }
 
+.add-word-helper-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    font-size: 0.82rem;
+    color: rgba(64, 81, 104, 0.86);
+}
+
+.add-word-count {
+    min-width: 3.4rem;
+    text-align: right;
+    font-weight: 700;
+    color: rgba(64, 81, 104, 0.9);
+}
+
+.add-word-count.is-over-limit {
+    color: #a12c4a;
+}
+
 .add-word-copy {
     display: grid;
     gap: 0.35rem;

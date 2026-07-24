@@ -1,5 +1,5 @@
 import "./AtmosphericButtons.css";
-import { type TimeMode, type SeasonMode, type WeatherMode } from "../../theme/atmosphere";
+import { timeModeLabels, type TimeMode, type SeasonMode, type WeatherMode } from "../../theme/atmosphere";
 
 type AtmosphericButtonsProps = {
   timeMode: TimeMode;
@@ -33,7 +33,11 @@ export default function AtmosphericButtons({
   };
 
   const modeColors = {
+    morning: "#FFF2C7",
     day: "#FFE8A3",
+    golden: "#FFD27A",
+    sunset: "#FFB88E",
+    dusk: "#7283A8",
     night: "#2C3E50",
     summer: "#A2D9B2",
     winter: "#A7C6D8",
@@ -62,20 +66,26 @@ export default function AtmosphericButtons({
       </div>
 
       <div className="atmos-buttons-group">
-        <button
-          className={`atmos-button ${timeMode === "day" ? "is-active" : ""}`}
-          style={{ background: modeColors.day }}
-          onClick={() => setTimeMode("day")}
-        >
-          Day
-        </button>
-        <button
-          className={`atmos-button ${timeMode === "night" ? "is-active" : ""}`}
-          style={{ background: modeColors.night, color: "#fff" }}
-          onClick={() => setTimeMode("night")}
-        >
-          Night
-        </button>
+        {([
+          "morning",
+          "day",
+          "golden",
+          "sunset",
+          "dusk",
+          "night",
+        ] as TimeMode[]).map((mode) => (
+          <button
+            key={mode}
+            className={`atmos-button ${timeMode === mode ? "is-active" : ""}`}
+            style={{
+              background: modeColors[mode],
+              color: mode === "dusk" || mode === "night" ? "#fff" : "#1f2933",
+            }}
+            onClick={() => setTimeMode(mode)}
+          >
+            {timeModeLabels[mode]}
+          </button>
+        ))}
       </div>
 
       <div className="atmos-buttons-group">

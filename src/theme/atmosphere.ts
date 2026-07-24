@@ -1,11 +1,28 @@
-export type TimeMode = 'day' | 'night';
+export type TimeMode = 'morning' | 'day' | 'golden' | 'sunset' | 'dusk' | 'night';
 export type SeasonMode = 'summer' | 'winter';
 export type WeatherMode = 'clear' | 'rain' | 'snow';
 
+export const timeModeLabels: Record<TimeMode, string> = {
+  morning: 'Morning',
+  day: 'Day',
+  golden: 'Golden Hour',
+  sunset: 'Sunset',
+  dusk: 'Dusk',
+  night: 'Night',
+};
+
+export function isDarkTimeMode(timeMode: TimeMode): boolean {
+  return timeMode === 'dusk' || timeMode === 'night';
+}
+
 export const atmosphere = {
   time: {
-    day: "#f5f9ff",      // soft daylight
-    night: "#0b1a33"     // deep navy night
+    morning: "#f8fbff",
+    day: "#f5f9ff",
+    golden: "#fff1d6",
+    sunset: "#ffd8bd",
+    dusk: "#33496e",
+    night: "#0b1a33"
   },
   season: {
     summer: "#ffe7b3",   // warm golden tint

@@ -1,0 +1,347 @@
+.grounding-compass {
+    --influence-strength: 0;
+    --release-strength: 0;
+    --balance-position: 50%;
+    --influence-alpha-strong: calc(0.36 + (var(--influence-strength) * 0.5));
+    --influence-alpha-soft: calc(0.3 + (var(--influence-strength) * 0.34));
+    --release-alpha-strong: calc(0.32 + (var(--release-strength) * 0.52));
+    --release-alpha-soft: calc(0.28 + (var(--release-strength) * 0.34));
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1rem, 2.4vw, 1.6rem);
+    border-radius: 20px;
+    background:
+        linear-gradient(140deg, rgba(255, 255, 255, 0.58), rgba(248, 251, 255, 0.4)),
+        linear-gradient(220deg, rgba(226, 236, 250, 0.22), rgba(255, 236, 204, 0.16));
+    border: 1px solid rgba(142, 165, 198, 0.28);
+    box-shadow: 0 20px 48px rgba(66, 88, 120, 0.12);
+    -webkit-backdrop-filter: blur(14px) saturate(135%);
+    backdrop-filter: blur(14px) saturate(135%);
+    overflow: hidden;
+}
+
+.grounding-compass-header {
+    display: grid;
+    gap: 0.38rem;
+}
+
+.grounding-compass-kicker {
+    margin: 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: rgba(67, 87, 118, 0.86);
+}
+
+.grounding-compass-header h3 {
+    margin: 0;
+    color: rgba(42, 57, 79, 0.95);
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+}
+
+.grounding-compass-header p {
+    margin: 0;
+    color: rgba(61, 81, 111, 0.9);
+    line-height: 1.45;
+}
+
+.grounding-balance-meter {
+    margin-top: 0.18rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.grounding-meter-end {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.grounding-meter-release {
+    color: rgba(145, 105, 40, 0.9);
+}
+
+.grounding-meter-influence {
+    color: rgba(65, 120, 77, 0.92);
+}
+
+.grounding-meter-track {
+    position: relative;
+    height: 10px;
+    border-radius: 999px;
+    background: linear-gradient(90deg,
+            rgba(239, 194, 112, 0.62) 0%,
+            rgba(245, 232, 196, 0.68) 50%,
+            rgba(153, 209, 165, 0.68) 100%);
+    border: 1px solid rgba(162, 182, 206, 0.38);
+}
+
+.grounding-meter-indicator {
+    position: absolute;
+    top: 50%;
+    left: var(--balance-position);
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(126, 152, 186, 0.52);
+    box-shadow: 0 3px 10px rgba(63, 84, 115, 0.28);
+    transform: translate(-50%, -50%);
+    transition: left 260ms ease;
+}
+
+.grounding-balance-state {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: rgba(62, 82, 112, 0.88);
+}
+
+.grounding-compass-instructions {
+    margin-top: 0.2rem;
+    padding: 0.46rem 0.58rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.56);
+    border: 1px solid rgba(166, 184, 209, 0.28);
+    color: rgba(52, 70, 97, 0.92);
+    font-size: 0.84rem;
+}
+
+.grounding-reset-button {
+    width: fit-content;
+    margin-top: 0.2rem;
+    padding: 0.34rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid rgba(145, 168, 199, 0.45);
+    background: rgba(255, 255, 255, 0.74);
+    color: rgba(52, 69, 94, 0.92);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+.grounding-reset-button:hover,
+.grounding-reset-button:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 7px 14px rgba(79, 99, 129, 0.15);
+}
+
+.grounding-reset-button:disabled {
+    cursor: default;
+    opacity: 0.48;
+    transform: none;
+    box-shadow: none;
+}
+
+.grounding-compass-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+    gap: clamp(0.8rem, 2vw, 1.2rem);
+    align-items: start;
+    justify-content: center;
+}
+
+.grounding-wheel {
+    position: relative;
+    width: min(220px, 100%);
+    aspect-ratio: 1;
+    margin: 0 auto;
+}
+
+.grounding-wheel-surface {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background:
+        conic-gradient(from -70deg,
+            rgba(102, 164, 114, var(--influence-alpha-strong)) 0deg,
+            rgba(176, 224, 186, var(--influence-alpha-soft)) 165deg,
+            rgba(255, 222, 166, var(--release-alpha-strong)) 165deg,
+            rgba(240, 188, 117, var(--release-alpha-soft)) 360deg);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+        inset 0 0 26px rgba(255, 255, 255, 0.46),
+        0 16px 36px rgba(85, 104, 131, 0.22);
+    transition: background 260ms ease;
+}
+
+.grounding-wheel-center {
+    position: absolute;
+    inset: 24%;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 0.55rem;
+    background:
+        linear-gradient(135deg,
+            rgba(244, 252, 245, calc(0.18 + (var(--influence-strength) * 0.45))),
+            rgba(255, 243, 221, calc(0.16 + (var(--release-strength) * 0.44)))),
+        rgba(255, 255, 255, 0.74);
+    box-shadow:
+        inset 0 0 0 1px rgba(145, 166, 198, 0.35),
+        0 8px 18px rgba(73, 95, 125, 0.16);
+    transition: background 260ms ease;
+}
+
+.grounding-wheel-center span {
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: rgba(47, 62, 85, 0.9);
+}
+
+.grounding-wheel-label {
+    position: absolute;
+    padding: 0.28rem 0.62rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(171, 189, 214, 0.36);
+    color: rgba(54, 71, 97, 0.9);
+}
+
+.grounding-wheel-label-can {
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.grounding-wheel-label-release {
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.grounding-lists {
+    display: grid;
+    gap: 0.7rem;
+    width: min(100%, 360px);
+    min-width: 0;
+    justify-self: center;
+}
+
+.grounding-list-card {
+    min-width: 0;
+    padding: 0.75rem 0.85rem;
+    border-radius: 14px;
+    border: 1px solid rgba(166, 184, 209, 0.32);
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.grounding-list-card h4 {
+    margin: 0 0 0.42rem;
+    font-size: 0.9rem;
+    color: rgba(44, 58, 82, 0.95);
+}
+
+.grounding-list-card ul {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.34rem;
+}
+
+.grounding-item-button {
+    width: 100%;
+    min-width: 0;
+    text-align: left;
+    padding: 0.4rem 0.54rem;
+    border-radius: 9px;
+    border: 1px solid rgba(166, 184, 209, 0.28);
+    background: rgba(255, 255, 255, 0.5);
+    color: rgba(64, 80, 106, 0.95);
+    font: inherit;
+    font-size: 0.86rem;
+    cursor: pointer;
+    transition: transform 140ms ease, background 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.grounding-item-button:hover,
+.grounding-item-button:focus-visible {
+    transform: translateX(1px);
+    border-color: rgba(136, 161, 195, 0.42);
+    box-shadow: 0 6px 14px rgba(81, 102, 132, 0.12);
+}
+
+.grounding-item-button.is-selected {
+    background: linear-gradient(135deg, rgba(214, 239, 218, 0.68), rgba(255, 230, 190, 0.54));
+    border-color: rgba(112, 146, 184, 0.5);
+    color: rgba(42, 58, 82, 0.97);
+    font-weight: 700;
+}
+
+.grounding-compass.is-release-leading .grounding-compass-instructions {
+    background: rgba(255, 244, 223, 0.72);
+    border-color: rgba(223, 183, 110, 0.38);
+}
+
+.grounding-compass.is-influence-leading .grounding-compass-instructions {
+    background: rgba(228, 246, 232, 0.7);
+    border-color: rgba(126, 179, 137, 0.36);
+}
+
+.grounding-compass.is-balanced .grounding-compass-instructions {
+    background: rgba(239, 246, 255, 0.64);
+    border-color: rgba(155, 180, 212, 0.36);
+}
+
+.grounding-list-can {
+    box-shadow: inset 0 0 18px rgba(148, 201, 159, 0.12);
+}
+
+.grounding-list-release {
+    box-shadow: inset 0 0 18px rgba(228, 190, 132, 0.14);
+}
+
+.grounding-highlights {
+    display: grid;
+    gap: 0.65rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grounding-highlight-card {
+    padding: 0.68rem 0.74rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.58);
+    border: 1px solid rgba(166, 184, 209, 0.3);
+    box-shadow: 0 8px 20px rgba(89, 109, 140, 0.12);
+}
+
+.grounding-highlight-card h4 {
+    margin: 0;
+    font-size: 0.86rem;
+    color: rgba(48, 63, 88, 0.92);
+}
+
+.grounding-highlight-card p {
+    margin: 0.34rem 0 0;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: rgba(66, 83, 109, 0.88);
+}
+
+@media (max-width: 980px) {
+    .grounding-compass-layout {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
+    .grounding-highlights {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1280px) {
+    .grounding-compass-layout {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+}

@@ -39,6 +39,10 @@
     transition: filter 800ms ease;
 }
 
+.homepage-grounding-zone {
+    margin-top: 1rem;
+}
+
 .lexicon-toggle-button {
     margin-top: 1rem;
     padding: 0.7rem 1.1rem;

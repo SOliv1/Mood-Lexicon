@@ -28,6 +28,7 @@ type LexiconProps = {
 };
 
 const STORAGE_KEY = "mood-lexicon.user-words";
+const USER_WORDS_UPDATED_EVENT = "mood-lexicon:user-words-updated";
 
 function createInitialCategories() {
   return moods.reduce(
@@ -111,6 +112,20 @@ export default function Lexicon({ isDrawer = false, onClose, onGrowthChange }: L
   }, []);
 
   useEffect(() => {
+    const syncFromStorage = () => {
+      setMyWords(loadStoredWords());
+    };
+
+    window.addEventListener(USER_WORDS_UPDATED_EVENT, syncFromStorage);
+    window.addEventListener("storage", syncFromStorage);
+
+    return () => {
+      window.removeEventListener(USER_WORDS_UPDATED_EVENT, syncFromStorage);
+      window.removeEventListener("storage", syncFromStorage);
+    };
+  }, []);
+
+  useEffect(() => {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(myWords));
     } catch {
@@ -128,7 +143,32 @@ export default function Lexicon({ isDrawer = false, onClose, onGrowthChange }: L
   function handleWordAdded(entry: UserWordEntry) {
     setFlashCategory(entry.category);
     setFlashTick((current) => current + 1);
-    setMyWords((prev) => [...prev, entry]);
+    setMyWords((prev) => {
+      const existingIndex = prev.findIndex(
+        (item) => item.word.trim().toLowerCase() === entry.word.trim().toLowerCase()
+      );
+
+      if (existingIndex === -1) {
+        return [...prev, entry];
+      }
+
+      const next = [...prev];
+      const existing = next[existingIndex];
+
+      const shouldUpgradeCategory =
+        existing.category === "uncategorised" && entry.category !== "uncategorised";
+
+      const mergedEntry: UserWordEntry = {
+        ...existing,
+        ...entry,
+        category: shouldUpgradeCategory ? entry.category : existing.category,
+        matchedMood: shouldUpgradeCategory ? entry.matchedMood : existing.matchedMood,
+        tone: shouldUpgradeCategory ? entry.tone : existing.tone,
+      };
+
+      next[existingIndex] = mergedEntry;
+      return next;
+    });
   }
 
   const content = (

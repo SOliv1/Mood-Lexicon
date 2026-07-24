@@ -2,6 +2,7 @@ import { useEffect, useState, type CSSProperties } from "react";
 import { useSelector } from "react-redux";
 import AtmospherePanel from "../components/Ritual/AtmospherePanel";
 import AtmosphericButtons from "../components/Ritual/AtmosphericButtons";
+import GroundingCompass from "../components/Ritual/GroundingCompass";
 import HeroHeader from "../components/Hero/HeroHeader";
 import MoodDetail from "../components/Mood/MoodDetail";
 import MoodDisplay from "../features/mood/MoodDisplay";
@@ -152,6 +153,10 @@ export default function HomePage({
             </button>
           </div>
         </div>
+
+        <section className="homepage-grounding-zone" aria-label="Grounding compass">
+          <GroundingCompass />
+        </section>
       </section>
 
       <section

@@ -1,4 +1,3 @@
-import { type CSSProperties } from "react";
 import { type SeasonMode, type TimeMode, type WeatherMode } from "../../theme/atmosphere";
 import RainAnimation from "./RainAnimation";
 import SnowAnimation from "./SnowAnimation";
@@ -13,21 +12,28 @@ type AtmosphereCanvasProps = {
   weatherMode: WeatherMode;
 };
 
-function getUkSecondsSinceMidnight() {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-    timeZone: "Europe/London",
-  }).formatToParts(new Date());
+function getBaseScene(
+  timeMode: TimeMode,
+  seasonMode: SeasonMode,
+  weatherMode: WeatherMode
+): "clear" | "summer" | "rain" | "winter" | "snow" | "night" {
+  if (timeMode === "night" || timeMode === "dusk") {
+    return "night";
+  }
 
-  const byType = Object.fromEntries(parts.map((part) => [part.type, part.value]));
-  const hour = Number(byType.hour ?? 0);
-  const minute = Number(byType.minute ?? 0);
-  const second = Number(byType.second ?? 0);
+  if (weatherMode === "snow") {
+    return "snow";
+  }
 
-  return hour * 3600 + minute * 60 + second;
+  if (weatherMode === "rain") {
+    return "rain";
+  }
+
+  if (seasonMode === "winter") {
+    return "winter";
+  }
+
+  return "summer";
 }
 
 export default function AtmosphereCanvas({
@@ -35,31 +41,27 @@ export default function AtmosphereCanvas({
   seasonMode,
   weatherMode,
 }: AtmosphereCanvasProps) {
-  const dayCycleOffset = `-${getUkSecondsSinceMidnight()}s`;
+  const baseScene = getBaseScene(timeMode, seasonMode, weatherMode);
 
   return (
-    <div
-      className="global-atmosphere-canvas"
-      style={{ "--day-cycle-offset": dayCycleOffset } as CSSProperties}
-      aria-hidden="true"
-    >
+    <div className="global-atmosphere-canvas" aria-hidden="true">
       <div className="daily-scene-rotation">
-        <div className="daily-scene daily-scene-clear">
+        <div className={`daily-scene daily-scene-clear ${baseScene === "clear" ? "is-active" : ""}`}>
           <ClearSky />
         </div>
-        <div className="daily-scene daily-scene-summer">
+        <div className={`daily-scene daily-scene-summer ${baseScene === "summer" ? "is-active" : ""}`}>
           <SummerLight />
         </div>
-        <div className="daily-scene daily-scene-rain">
+        <div className={`daily-scene daily-scene-rain ${baseScene === "rain" ? "is-active" : ""}`}>
           <RainAnimation />
         </div>
-        <div className="daily-scene daily-scene-winter">
+        <div className={`daily-scene daily-scene-winter ${baseScene === "winter" ? "is-active" : ""}`}>
           <WinterGlow />
         </div>
-        <div className="daily-scene daily-scene-snow">
+        <div className={`daily-scene daily-scene-snow ${baseScene === "snow" ? "is-active" : ""}`}>
           <SnowAnimation />
         </div>
-        <div className="daily-scene daily-scene-night">
+        <div className={`daily-scene daily-scene-night ${baseScene === "night" ? "is-active" : ""}`}>
           <NightSky />
         </div>
       </div>

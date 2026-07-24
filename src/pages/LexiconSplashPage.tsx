@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { classifyWord } from "../utils/classifyWord";
+import type { UserWordEntry } from "../types/lexicon";
 import { getSeason } from "../utils/getSeason";
 import "./LexiconSplashPage.css";
 
@@ -12,6 +14,87 @@ const splashLines: Record<string, string> = {
 
 const SPLASH_REFLECTION_KEY = "mood-lexicon.splash-reflection";
 const ONBOARDING_KEY = "lexicon-onboarded";
+const USER_WORDS_KEY = "mood-lexicon.user-words";
+const ONBOARDING_EVENT = "mood-lexicon:onboarding-complete";
+const REFLECTION_SEEDED_EVENT = "mood-lexicon:reflection-seeded";
+const RITUAL_CLEAR_PENDING_KEY = "mood-lexicon.ritual-clear-pending";
+
+function isUserWordEntry(value: unknown): value is UserWordEntry {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const entry = value as UserWordEntry;
+  return (
+    typeof entry.word === "string" &&
+    Array.isArray(entry.synonyms) &&
+    Array.isArray(entry.antonyms) &&
+    typeof entry.category === "string" &&
+    typeof entry.matchedMood === "string" &&
+    typeof entry.tone === "string"
+  );
+}
+
+function extractReflectionWords(text: string): string[] {
+  const tokens = text.match(/[A-Za-z][A-Za-z'-]{1,}/g) ?? [];
+  const seen = new Set<string>();
+
+  return tokens
+    .map((token) => token.toLowerCase())
+    .filter((token) => {
+      if (seen.has(token)) {
+        return false;
+      }
+      seen.add(token);
+      return true;
+    });
+}
+
+function seedReflectionWords(reflectionWords: string): { seededCount: number; extractedCount: number } {
+  const words = extractReflectionWords(reflectionWords);
+  if (!words.length) {
+    return { seededCount: 0, extractedCount: 0 };
+  }
+
+  try {
+    const stored = window.localStorage.getItem(USER_WORDS_KEY);
+    const parsed = stored ? (JSON.parse(stored) as unknown) : [];
+    const existingEntries = Array.isArray(parsed) ? parsed.filter(isUserWordEntry) : [];
+    const existingWords = new Set(existingEntries.map((entry) => entry.word.toLowerCase()));
+
+    const seededEntries: UserWordEntry[] = [];
+    for (const word of words) {
+      if (existingWords.has(word)) {
+        continue;
+      }
+
+      const classification = classifyWord(word, {
+        word,
+        synonyms: [],
+        antonyms: [],
+      });
+
+      seededEntries.push({
+        word,
+        synonyms: [],
+        antonyms: [],
+        category: classification.category,
+        matchedMood: classification.matchedMood,
+        tone: classification.tone,
+      });
+      existingWords.add(word);
+    }
+
+    if (seededEntries.length) {
+      window.localStorage.setItem(USER_WORDS_KEY, JSON.stringify([...existingEntries, ...seededEntries]));
+    }
+
+    return { seededCount: seededEntries.length, extractedCount: words.length };
+  } catch {
+    // Ignore storage errors to keep onboarding uninterrupted.
+    return { seededCount: 0, extractedCount: words.length };
+  }
+}
 
 export default function LexiconSplashPage() {
   const navigate = useNavigate();
@@ -43,7 +126,9 @@ export default function LexiconSplashPage() {
     }
   };
 
-  const enterLightRitual = () => {
+  const completeArrivalAndSeed = () => {
+    const { seededCount, extractedCount } = seedReflectionWords(reflectionWords);
+
     try {
       window.localStorage.setItem(ONBOARDING_KEY, "true");
     } catch {
@@ -51,7 +136,34 @@ export default function LexiconSplashPage() {
     }
 
     setHasOnboarded(true);
+
+    try {
+      if (extractedCount > 0) {
+        window.localStorage.setItem(
+          RITUAL_CLEAR_PENDING_KEY,
+          JSON.stringify({
+            pending: true,
+            seededCount,
+            extractedCount,
+            savedAt: Date.now(),
+          })
+        );
+      }
+    } catch {
+      // Ignore storage failures.
+    }
+
+    window.dispatchEvent(new Event(ONBOARDING_EVENT));
+    window.dispatchEvent(new CustomEvent(REFLECTION_SEEDED_EVENT, { detail: { seededCount, extractedCount } }));
+  };
+
+  const enterLightRitual = () => {
+    completeArrivalAndSeed();
     navigate("/#light-ritual");
+  };
+
+  const continueIntoHome = () => {
+    completeArrivalAndSeed();
   };
 
   return (
@@ -100,7 +212,7 @@ export default function LexiconSplashPage() {
 
         <div className="splash-actions">
           <button type="button" className="splash-button splash-primary" onClick={enterLightRitual}>{hasOnboarded ? "Return to the Light Ritual" : "Step Into the Light Ritual"}</button>
-          <Link to="/" className="splash-button splash-secondary">Continue into Home</Link>
+          <Link to="/" className="splash-button splash-secondary" onClick={continueIntoHome}>Continue into Home</Link>
         </div>
       </div>
     </section>

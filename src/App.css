@@ -3,6 +3,15 @@
   --atmo-top: #f7f0de;
   --atmo-bottom: #c9ddff;
   --atmo-overlay: rgba(255, 255, 255, 0.14);
+  --clear-sky-core: rgba(255, 221, 110, 0.36);
+  --clear-sky-halo: rgba(255, 244, 203, 0.22);
+  --clear-sky-wash-top: rgba(255, 242, 197, 0.16);
+  --clear-sky-wash-mid: rgba(255, 233, 166, 0.05);
+  --summer-light-primary: rgba(255, 212, 125, 0.3);
+  --summer-light-secondary: rgba(255, 238, 184, 0.16);
+  --summer-light-wash: rgba(255, 230, 172, 0.08);
+  --sun-ray-border: rgba(255, 222, 146, 0.46);
+  --sun-ray-glow: rgba(255, 237, 187, 0.32);
 }
 
 html,
@@ -82,16 +91,131 @@ body {
 }
 
 .active-atmosphere-layer {
-  opacity: 0.64;
+  opacity: 0.42;
   z-index: 3;
+}
+
+.atmo-time-morning .active-atmosphere-layer {
+  opacity: 0.16;
+}
+
+.atmo-time-day .active-atmosphere-layer {
+  opacity: 0.18;
+}
+
+.atmo-time-golden .active-atmosphere-layer {
+  opacity: 0.22;
+}
+
+.atmo-time-sunset .active-atmosphere-layer {
+  opacity: 0.24;
+}
+
+.atmo-time-dusk .active-atmosphere-layer {
+  opacity: 0.3;
+}
+
+.atmo-time-morning .active-atmosphere-layer .atmos-clear-sky {
+  opacity: 0.44;
+}
+
+.atmo-time-day .active-atmosphere-layer .atmos-clear-sky {
+  opacity: 0.5;
+}
+
+.atmo-time-golden .active-atmosphere-layer .atmos-clear-sky {
+  opacity: 0.58;
+}
+
+.atmo-time-sunset .active-atmosphere-layer .atmos-clear-sky {
+  opacity: 0.56;
+}
+
+.atmo-time-dusk .active-atmosphere-layer .atmos-clear-sky {
+  opacity: 0.22;
+}
+
+.atmo-time-morning .active-atmosphere-layer .atmos-summer-light {
+  opacity: 0.34;
+}
+
+.atmo-time-day .active-atmosphere-layer .atmos-summer-light {
+  opacity: 0.58;
+}
+
+.atmo-time-golden .active-atmosphere-layer .atmos-summer-light {
+  opacity: 0.64;
+}
+
+.atmo-time-sunset .active-atmosphere-layer .atmos-summer-light {
+  opacity: 0.54;
+}
+
+.atmo-time-dusk .active-atmosphere-layer .atmos-summer-light {
+  opacity: 0.18;
+}
+
+.atmo-time-night .active-atmosphere-layer {
+  opacity: 0.42;
+}
+
+.atmo-time-morning .daily-scene::before,
+.atmo-time-day .daily-scene::before,
+.atmo-time-golden .daily-scene::before,
+.atmo-time-sunset .daily-scene::before {
+  filter: saturate(1.02) contrast(0.98) brightness(1.02);
+  opacity: 0.78;
+}
+
+.atmo-time-dusk .daily-scene::before {
+  filter: saturate(0.86) contrast(0.98) brightness(0.62);
+  opacity: 0.58;
+}
+
+.atmo-time-morning .daily-scene::after {
+  background:
+    radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.16), transparent 34%),
+    linear-gradient(155deg, rgba(255, 255, 255, 0.08), rgba(206, 228, 255, 0.04));
+}
+
+.atmo-time-day .daily-scene::before {
+  filter: saturate(1.02) contrast(0.98) brightness(1.02);
+  opacity: 0.78;
+}
+
+.atmo-time-day .daily-scene::after {
+  background:
+    radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.12), transparent 34%),
+    linear-gradient(155deg, rgba(255, 255, 255, 0.04), rgba(176, 206, 235, 0.05));
+}
+
+.atmo-time-golden .daily-scene::after {
+  background:
+    radial-gradient(circle at 24% 18%, rgba(255, 244, 222, 0.18), transparent 34%),
+    linear-gradient(155deg, rgba(255, 234, 194, 0.08), rgba(227, 205, 152, 0.08));
+}
+
+.atmo-time-sunset .daily-scene::after {
+  background:
+    radial-gradient(circle at 34% 20%, rgba(255, 223, 191, 0.2), transparent 36%),
+    linear-gradient(155deg, rgba(255, 197, 148, 0.12), rgba(205, 168, 216, 0.08));
+}
+
+.atmo-time-dusk .daily-scene::after {
+  background:
+    radial-gradient(circle at 40% 18%, rgba(255, 195, 150, 0.14), transparent 30%),
+    linear-gradient(180deg, rgba(46, 61, 96, 0.24), rgba(28, 37, 64, 0.18));
 }
 
 .daily-scene {
   position: absolute;
   inset: 0;
   opacity: 0;
-  animation: dailySceneFade 86400s linear infinite;
-  animation-delay: var(--day-cycle-offset);
+  transition: opacity 900ms ease;
+}
+
+.daily-scene.is-active {
+  opacity: 1;
 }
 
 .daily-scene::before {
@@ -114,24 +238,12 @@ body {
     linear-gradient(155deg, rgba(255, 255, 255, 0.08), rgba(145, 178, 212, 0.1));
 }
 
-.daily-scene-clear {
-  animation-delay: calc(var(--day-cycle-offset) - 0s);
-}
-
 .daily-scene-clear::before {
   background-image: url("./images/spring-meadow.png");
 }
 
-.daily-scene-summer {
-  animation-delay: calc(var(--day-cycle-offset) - 14400s);
-}
-
 .daily-scene-summer::before {
   background-image: url("./images/summerMeadow.png");
-}
-
-.daily-scene-rain {
-  animation-delay: calc(var(--day-cycle-offset) - 28800s);
 }
 
 .daily-scene-rain::before {
@@ -139,16 +251,8 @@ body {
   filter: saturate(0.78) contrast(0.92) brightness(0.9);
 }
 
-.daily-scene-winter {
-  animation-delay: calc(var(--day-cycle-offset) - 43200s);
-}
-
 .daily-scene-winter::before {
   background-image: url("./images/CountrysideSoftSnow.png");
-}
-
-.daily-scene-snow {
-  animation-delay: calc(var(--day-cycle-offset) - 57600s);
 }
 
 .daily-scene-snow::before {
@@ -156,22 +260,18 @@ body {
   filter: saturate(0.8) contrast(0.95) brightness(1.05);
 }
 
-.daily-scene-night {
-  animation-delay: calc(var(--day-cycle-offset) - 72000s);
-}
-
 .daily-scene-night::before {
   background-image: url("./images/Autumn-berry.png");
-  filter: saturate(0.42) contrast(1.08) brightness(0.22);
-  opacity: 0.24;
+  filter: saturate(0.52) contrast(1.02) brightness(0.34);
+  opacity: 0.38;
 }
 
 .daily-scene-night::after {
   background:
-    radial-gradient(circle at 68% 14%, rgba(180, 205, 255, 0.16), transparent 18%),
-    radial-gradient(circle at 28% 26%, rgba(125, 150, 230, 0.1), transparent 26%),
-    radial-gradient(ellipse 68% 28% at 58% 108%, rgba(178, 205, 255, 0.16), rgba(120, 154, 225, 0.08) 46%, transparent 74%),
-    linear-gradient(180deg, rgba(3, 9, 28, 0.9), rgba(8, 14, 38, 0.82));
+    radial-gradient(circle at 68% 14%, rgba(215, 228, 255, 0.22), transparent 18%),
+    radial-gradient(circle at 28% 26%, rgba(150, 174, 235, 0.12), transparent 26%),
+    radial-gradient(ellipse 68% 28% at 58% 108%, rgba(205, 220, 255, 0.18), rgba(142, 172, 228, 0.08) 46%, transparent 74%),
+    linear-gradient(180deg, rgba(7, 16, 40, 0.68), rgba(16, 27, 58, 0.56));
 }
 
 .daily-scene .atmos-animation {
@@ -210,16 +310,29 @@ body {
 
 .global-atmosphere-canvas .atmos-clear-sky {
   background:
-    radial-gradient(circle at 72% 18%, rgba(255, 226, 117, 0.28), transparent 13%),
-    linear-gradient(180deg, rgba(255, 247, 214, 0.08), transparent 72%);
+    radial-gradient(circle at 72% 18%, var(--clear-sky-core), transparent 14%),
+    radial-gradient(circle at 66% 16%, var(--clear-sky-halo), transparent 20%),
+    linear-gradient(180deg, var(--clear-sky-wash-top), var(--clear-sky-wash-mid) 52%, transparent 76%);
+}
+
+.global-atmosphere-canvas .atmos-summer-light {
+  background:
+    radial-gradient(circle at 24% 76%, var(--summer-light-primary), transparent 34%),
+    radial-gradient(circle at 72% 24%, var(--summer-light-secondary), transparent 26%),
+    linear-gradient(180deg, var(--summer-light-wash), transparent 70%);
+}
+
+.global-atmosphere-canvas .atmos-sun-ray {
+  border-color: var(--sun-ray-border);
+  box-shadow: 0 0 24px var(--sun-ray-glow);
 }
 
 .global-atmosphere-canvas .atmos-night-sky {
   background:
-    radial-gradient(circle at 72% 12%, rgba(215, 225, 255, 0.2), transparent 16%),
-    radial-gradient(circle at 34% 24%, rgba(82, 108, 208, 0.14), transparent 28%),
-    radial-gradient(ellipse 62% 24% at 56% 106%, rgba(154, 186, 255, 0.12), rgba(96, 134, 214, 0.06) 48%, transparent 76%),
-    linear-gradient(180deg, rgba(1, 6, 22, 0.76), rgba(6, 12, 33, 0.66));
+    radial-gradient(circle at 72% 12%, rgba(222, 232, 255, 0.2), transparent 16%),
+    radial-gradient(circle at 34% 24%, rgba(123, 149, 226, 0.12), transparent 28%),
+    radial-gradient(ellipse 62% 24% at 56% 106%, rgba(176, 201, 255, 0.14), rgba(122, 155, 223, 0.06) 48%, transparent 76%),
+    linear-gradient(180deg, rgba(8, 18, 42, 0.48), rgba(18, 31, 63, 0.34));
 }
 
 .global-atmosphere-canvas .atmos-moon-shell {
@@ -255,6 +368,62 @@ body {
   filter: blur(var(--moon-shadow-feather));
   transform: translateX(var(--moon-shadow-shift));
   transition: transform 900ms ease, filter 900ms ease;
+}
+
+.atmo-time-morning {
+  --atmo-top: #fff8e8;
+  --atmo-bottom: #d9ecff;
+  --clear-sky-core: rgba(255, 235, 161, 0.28);
+  --clear-sky-halo: rgba(255, 249, 224, 0.24);
+  --clear-sky-wash-top: rgba(255, 248, 218, 0.14);
+  --clear-sky-wash-mid: rgba(213, 232, 255, 0.04);
+  --summer-light-primary: rgba(255, 223, 161, 0.18);
+  --summer-light-secondary: rgba(255, 243, 207, 0.14);
+  --summer-light-wash: rgba(255, 242, 207, 0.05);
+  --sun-ray-border: rgba(255, 229, 168, 0.54);
+  --sun-ray-glow: rgba(255, 244, 219, 0.36);
+}
+
+.atmo-time-golden {
+  --atmo-top: #ffedd2;
+  --atmo-bottom: #d9e6ff;
+  --clear-sky-core: rgba(255, 208, 104, 0.42);
+  --clear-sky-halo: rgba(255, 235, 182, 0.26);
+  --clear-sky-wash-top: rgba(255, 231, 174, 0.2);
+  --clear-sky-wash-mid: rgba(255, 212, 130, 0.08);
+  --summer-light-primary: rgba(255, 196, 107, 0.34);
+  --summer-light-secondary: rgba(255, 226, 163, 0.18);
+  --summer-light-wash: rgba(255, 210, 138, 0.1);
+  --sun-ray-border: rgba(255, 205, 112, 0.58);
+  --sun-ray-glow: rgba(255, 226, 161, 0.42);
+}
+
+.atmo-time-sunset {
+  --atmo-top: #ffd8bd;
+  --atmo-bottom: #c8d8f3;
+  --clear-sky-core: rgba(255, 176, 112, 0.42);
+  --clear-sky-halo: rgba(255, 220, 189, 0.2);
+  --clear-sky-wash-top: rgba(255, 207, 170, 0.22);
+  --clear-sky-wash-mid: rgba(210, 170, 211, 0.1);
+  --summer-light-primary: rgba(255, 168, 103, 0.3);
+  --summer-light-secondary: rgba(255, 213, 169, 0.18);
+  --summer-light-wash: rgba(240, 165, 120, 0.1);
+  --sun-ray-border: rgba(255, 176, 110, 0.42);
+  --sun-ray-glow: rgba(255, 208, 166, 0.28);
+}
+
+.atmo-time-dusk {
+  --atmo-top: #334669;
+  --atmo-bottom: #6c7ea2;
+  --clear-sky-core: rgba(255, 179, 124, 0.22);
+  --clear-sky-halo: rgba(255, 210, 184, 0.12);
+  --clear-sky-wash-top: rgba(148, 118, 160, 0.12);
+  --clear-sky-wash-mid: rgba(101, 123, 170, 0.08);
+  --summer-light-primary: rgba(217, 158, 104, 0.16);
+  --summer-light-secondary: rgba(215, 188, 160, 0.1);
+  --summer-light-wash: rgba(104, 92, 137, 0.06);
+  --sun-ray-border: rgba(231, 184, 143, 0.24);
+  --sun-ray-glow: rgba(228, 187, 151, 0.14);
 }
 
 .atmo-time-night body {
@@ -411,9 +580,29 @@ body {
 }
 
 /* Time of day */
+.atmo-time-morning {
+  --atmo-top: #fff8e8;
+  --atmo-bottom: #d9ecff;
+}
+
 .atmo-time-day {
   --atmo-top: #fff4db;
   --atmo-bottom: #cfe6ff;
+}
+
+.atmo-time-golden {
+  --atmo-top: #ffedd2;
+  --atmo-bottom: #d9e6ff;
+}
+
+.atmo-time-sunset {
+  --atmo-top: #ffd8bd;
+  --atmo-bottom: #c8d8f3;
+}
+
+.atmo-time-dusk {
+  --atmo-top: #334669;
+  --atmo-bottom: #6c7ea2;
 }
 
 .atmo-time-night {

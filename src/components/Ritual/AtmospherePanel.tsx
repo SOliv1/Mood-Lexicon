@@ -3,6 +3,8 @@ import './AtmospherePanel.css';
 import './Snow.css';
 import {
   atmosphere,
+  isDarkTimeMode,
+  timeModeLabels,
   type TimeMode,
   type SeasonMode,
   type WeatherMode,
@@ -27,18 +29,15 @@ export default function AtmospherePanel({
 }: Props) {
   const border = atmosphere.season[seasonMode];
   const overlay = atmosphere.weather[weatherMode];
+  const panelMode = isDarkTimeMode(timeMode) ? 'night' : 'day';
 
-  const finalMode = `${timeMode} • ${seasonMode} • ${weatherMode}`;
+  const finalMode = `${timeModeLabels[timeMode]} • ${seasonMode} • ${weatherMode}`;
 
-  const panelTint = {
-  day: "rgba(255,232,163,0.3)",
-  night: "rgba(44,62,80,0.4)",
-  summer: "rgba(162,217,178,0.3)",
-  winter: "rgba(167,198,216,0.3)",
-  clear: "rgba(255,217,122,0.3)",
-  rain: "rgba(111,168,220,0.3)",
-  snow: "rgba(255,255,255,0.5)"
-};
+  const panelTint: Record<WeatherMode, string> = {
+    clear: 'rgba(255, 217, 122, 0.3)',
+    rain: 'rgba(111, 168, 220, 0.3)',
+    snow: 'rgba(255, 255, 255, 0.5)',
+  };
 
   const snowflakes = useMemo(
     () =>
@@ -53,7 +52,7 @@ export default function AtmospherePanel({
 
   return (
     <div
-      className={`atmosphere-panel atmosphere-panel-${timeMode} atmosphere-weather-${weatherMode}`}
+      className={`atmosphere-panel atmosphere-panel-${panelMode} atmosphere-time-${timeMode} atmosphere-weather-${weatherMode}`}
       style={{
         borderLeft: `6px solid ${border}`,
         boxShadow: `0 8px 28px rgba(0, 0, 0, 0.14), inset 0 0 32px ${overlay}`,
@@ -99,7 +98,7 @@ export default function AtmospherePanel({
 
       <div className="atmosphere-row">
         <span className="atmosphere-label">Time:</span>
-        <span className="atmosphere-value">{currentTime} · {timeMode}</span>
+        <span className="atmosphere-value">{currentTime} · {timeModeLabels[timeMode]}</span>
       </div>
 
       <div className="atmosphere-row">

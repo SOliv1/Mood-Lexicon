@@ -94,6 +94,110 @@
     font-size: 1rem;
 }
 
+.ritual-input.is-fading-out {
+    animation: ritualInputFadeOut 1.5s ease forwards;
+    pointer-events: none;
+}
+
+.ritual-status-icon {
+    position: absolute;
+    top: 0.82rem;
+    right: 1rem;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.22rem;
+    margin: 0;
+    line-height: 1;
+    animation: ritualStatusWrapFade 2.3s ease forwards;
+    pointer-events: none;
+}
+
+.ritual-status-candle {
+    font-size: 1.08rem;
+    transform-origin: 50% 90%;
+    filter: drop-shadow(0 0 6px rgba(255, 196, 118, 0.35));
+    animation: ritualCandleBlow 1.5s ease forwards;
+}
+
+.ritual-status-sparkle {
+    font-size: 1.08rem;
+    color: rgba(108, 46, 146, 0.84);
+    text-shadow: 0 0 10px rgba(142, 93, 174, 0.45);
+    opacity: 0;
+    transform: translateY(2px) scale(0.78);
+    animation: ritualSparkleRise 1.5s ease 0.44s forwards;
+}
+
+@keyframes ritualStatusWrapFade {
+    0% {
+        opacity: 0;
+    }
+
+    12% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.14;
+    }
+}
+
+@keyframes ritualCandleBlow {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+
+    55% {
+        opacity: 0.72;
+        transform: scale(0.94) translateY(0.5px);
+    }
+
+    100% {
+        opacity: 0.08;
+        transform: scale(0.82) translateY(1px);
+    }
+}
+
+@keyframes ritualSparkleRise {
+    0% {
+        opacity: 0;
+        transform: translateY(2px) scale(0.78);
+    }
+
+    44% {
+        opacity: 0.96;
+        transform: translateY(-0.5px) scale(1.08);
+    }
+
+    100% {
+        opacity: 0.14;
+        transform: translateY(-2px) scale(0.95);
+    }
+}
+
+@keyframes ritualInputFadeOut {
+    0% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0);
+    }
+
+    70% {
+        opacity: 0.2;
+        filter: blur(1.6px);
+        transform: translateY(-1px);
+    }
+
+    100% {
+        opacity: 0;
+        filter: blur(2.2px);
+        transform: translateY(-2px);
+    }
+}
+
 /* ---------------------------------------------------------
    BUTTON — DEEP PURPLE
 --------------------------------------------------------- */

@@ -15,8 +15,16 @@ import { type TimeMode, type SeasonMode, type WeatherMode } from './theme/atmosp
 const LATITUDE = 52.06;
 const LONGITUDE = -1.98;
 const ARRIVAL_RITUAL_KEY = 'lexicon-onboarded';
+const ONBOARDING_EVENT = 'mood-lexicon:onboarding-complete';
 
-const timeClasses = ['atmo-time-day', 'atmo-time-night'];
+const timeClasses = [
+  'atmo-time-morning',
+  'atmo-time-day',
+  'atmo-time-golden',
+  'atmo-time-sunset',
+  'atmo-time-dusk',
+  'atmo-time-night',
+];
 const seasonClasses = ['atmo-season-summer', 'atmo-season-winter'];
 const weatherClasses = ['atmo-weather-clear', 'atmo-weather-rain', 'atmo-weather-snow'];
 const ukTimeFormatter = new Intl.DateTimeFormat('en-GB', {
@@ -67,10 +75,64 @@ function weatherLabelFromCode(code: number): string {
   return labels[code] ?? 'Weather shifting';
 }
 
+function getFallbackTimeMode(date: Date): TimeMode {
+  const hour = date.getHours() + date.getMinutes() / 60;
+
+  if (hour >= 5.5 && hour < 9.5) return 'morning';
+  if (hour >= 9.5 && hour < 15.5) return 'day';
+  if (hour >= 15.5 && hour < 18) return 'golden';
+  if (hour >= 18 && hour < 20) return 'sunset';
+  if (hour >= 20 && hour < 21) return 'dusk';
+  return 'night';
+}
+
+function getSolarTimeMode(now: Date, sunrise: Date, sunset: Date): TimeMode {
+  const sunriseTime = sunrise.getTime();
+  const sunsetTime = sunset.getTime();
+  const nowTime = now.getTime();
+
+  if (!Number.isFinite(sunriseTime) || !Number.isFinite(sunsetTime) || sunsetTime <= sunriseTime) {
+    return getFallbackTimeMode(now);
+  }
+
+  const duskEnd = sunsetTime + 45 * 60 * 1000;
+  if (nowTime < sunriseTime || nowTime >= duskEnd) {
+    return 'night';
+  }
+
+  if (nowTime >= sunsetTime) {
+    return 'dusk';
+  }
+
+  const sunsetStart = Math.max(sunriseTime, sunsetTime - 75 * 60 * 1000);
+  if (nowTime >= sunsetStart) {
+    return 'sunset';
+  }
+
+  const daylightWindow = sunsetStart - sunriseTime;
+  if (daylightWindow <= 0) {
+    return 'day';
+  }
+
+  const daylightProgress = (nowTime - sunriseTime) / daylightWindow;
+
+  if (daylightProgress < 0.26) return 'morning';
+  if (daylightProgress < 0.74) return 'day';
+  return 'golden';
+}
+
+function readArrivalRitualCompletion(): boolean {
+  try {
+    return window.localStorage.getItem(ARRIVAL_RITUAL_KEY) === 'true';
+  } catch {
+    return false;
+  }
+}
+
 function App() {
   const location = useLocation();
-  const [hasCompletedArrival, setHasCompletedArrival] = useState<boolean | null>(null);
-  const [timeMode, setTimeMode] = useState<TimeMode>('day');
+  const [hasCompletedArrival, setHasCompletedArrival] = useState<boolean>(() => readArrivalRitualCompletion());
+  const [timeMode, setTimeMode] = useState<TimeMode>(() => getFallbackTimeMode(new Date()));
   const [seasonMode, setSeasonMode] = useState<SeasonMode>(getSeasonFromDate(new Date()));
   const [weatherMode, setWeatherMode] = useState<WeatherMode>('clear');
   const [temperature, setTemperature] = useState<number | null>(null);
@@ -79,13 +141,20 @@ function App() {
   const [weatherSource, setWeatherSource] = useState<'auto' | 'manual'>('auto');
   const [currentTime, setCurrentTime] = useState(() => ukTimeFormatter.format(new Date()));
 
-  // Real season from current month.
+  // Keep onboarding routing in sync with localStorage updates.
   useEffect(() => {
-    try {
-      setHasCompletedArrival(window.localStorage.getItem(ARRIVAL_RITUAL_KEY) === 'true');
-    } catch {
-      setHasCompletedArrival(false);
-    }
+    setHasCompletedArrival(readArrivalRitualCompletion());
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const syncOnboarding = () => {
+      setHasCompletedArrival(readArrivalRitualCompletion());
+    };
+
+    window.addEventListener(ONBOARDING_EVENT, syncOnboarding);
+    return () => {
+      window.removeEventListener(ONBOARDING_EVENT, syncOnboarding);
+    };
   }, []);
 
   useEffect(() => {
@@ -160,7 +229,7 @@ function App() {
           const sunrise = new Date(sunriseRaw);
           const sunset = new Date(sunsetRaw);
           if (!cancelled) {
-            setTimeMode(now >= sunrise && now < sunset ? 'day' : 'night');
+            setTimeMode(getSolarTimeMode(now, sunrise, sunset));
           }
           return;
         }
@@ -168,9 +237,8 @@ function App() {
         // Fallback below when API is unavailable.
       }
 
-      const hour = new Date().getHours();
       if (!cancelled) {
-        setTimeMode(hour >= 6 && hour < 20 ? 'day' : 'night');
+        setTimeMode(getFallbackTimeMode(new Date()));
       }
     };
 
@@ -215,7 +283,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={hasCompletedArrival === null ? null : hasCompletedArrival ? (
+            element={hasCompletedArrival ? (
               <HomePage
                 timeMode={timeMode}
                 seasonMode={seasonMode}
